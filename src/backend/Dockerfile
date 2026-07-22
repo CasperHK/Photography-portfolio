@@ -1,16 +1,20 @@
-FROM golang:1.25-alpine
+FROM golang:alpine AS builder
 
-WORKDIR /app
+ENV GO111MODULE=on \
+    CGO_ENABLED=0
 
-RUN apk add --no-cache bash
-
-COPY go.mod go.sum ./
-RUN go mod download
-
+WORKDIR /build
 COPY . .
+RUN go mod tidy
+RUN go build --ldflags "-s -w -extldflags -static" -o main .
 
-RUN go build -o server .
+FROM alpine:latest
 
-EXPOSE 8080
+WORKDIR /www
 
-CMD ["/app/server"]
+COPY --from=builder /build/main /www/
+COPY --from=builder /build/.env /www/.env
+COPY --from=builder /build/public/ /www/public/
+COPY --from=builder /build/resources/ /www/resources/
+
+ENTRYPOINT ["/www/main"]
