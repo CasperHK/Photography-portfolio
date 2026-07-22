@@ -191,7 +191,9 @@ func writeJSON(w http.ResponseWriter, payload any) {
 	w.Header().Set("Content-Type", "application/json")
 	enc := json.NewEncoder(w)
 	enc.SetIndent("", "  ")
-	_ = enc.Encode(payload)
+	if err := enc.Encode(payload); err != nil {
+		log.Printf("writeJSON encode error: %v", err)
+	}
 }
 
 func corsMiddleware(next http.Handler) http.Handler {
