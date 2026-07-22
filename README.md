@@ -50,11 +50,11 @@ casper-photography/
    ```
    
 ## 🛠️ Local Development
- * Backend (/server):
+ * Backend (/frontend):
    ```bash
    go run main.go
    ```
- * Frontend (/web):
+ * Frontend (/backend):
    ```bash
    pnpm install
    pnpm run dev
