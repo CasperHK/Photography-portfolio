@@ -10,18 +10,20 @@
 ## 📂 Project Architecture (Monorepo)
 ```
 casper-photography/
-├── docker-compose.yml           # Production orchestration (App + Nginx + SQLite)
-├── server/                      # Goravel Backend API
-│   ├── app/
-│   ├── config/                  # SQLite & Database configurations
-│   ├── routes/
-│   ├── Dockerfile
-│   └── main.go
-└── web/                         # Solid.js + Rsbuild Frontend
-    ├── src/
-    ├── public/
-    ├── rsbuild.config.ts        # Rspack configuration with Solid plugin
-    └── package.json
+├── docker/
+│   └── docker-compose.yml       # Production orchestration (App + Nginx + SQLite)
+└── src/
+    ├── backend/                      # Goravel Backend API
+    │   ├── app/
+    │   ├── config/                  # SQLite & Database configurations
+    │   ├── routes/
+    │   ├── Dockerfile
+    │   └── main.go
+    └── frontend/                         # Solid.js + Rsbuild Frontend
+        ├── src/
+        ├── public/
+        ├── rsbuild.config.ts        # Rspack configuration with Solid plugin
+        └── package.json
 ```
 
 ## ✨ Key Features
