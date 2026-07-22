@@ -1,4 +1,5 @@
 import { createMemo, createSignal, For, onCleanup, onMount } from "solid-js";
+import TopNavBar from "./components/TopNavBar";
 
 type Exif = {
   camera: string;
@@ -184,10 +185,7 @@ export default function App() {
 
   return (
     <main class="page">
-      <header class="brand">
-        <h1>Casper Photography</h1>
-        <p>Selected travel, street, and landscape frames.</p>
-      </header>
+      <TopNavBar />
 
       <section ref={shellRef} class="mosaic-shell" aria-label="Portfolio gallery">
         <div class="mosaic-marquee" data-ready={hasPhotos() ? "true" : "false"}>
