@@ -29,24 +29,31 @@ casper-photography/
  * Cinematic Lightbox & EXIF Drawer: Displays precise camera metadata (Camera, Lens, Aperture, Shutter Speed, ISO) on demand.
  * SQLite-Powered Simplicity: Zero external database overhead; all data and media references are securely housed in a single, high-performance portable database.
  * Rspack-Accelerated Frontend: Built using Rust-based Rspack/Rsbuild for near-instantaneous builds and maximum UI responsiveness.
+ * Single Repo
 
 ## 🐳 Deployment with Docker Compose
  * Clone the repository:
+   ```bash
    git clone https://github.com/your-username/casper-photography.git
-cd casper-photography
-
+   cd casper-photography
+   ```
  * Build and start services:
+   ```bash
    docker compose up -d --build
-
+   ```
+   
  * Check container status:
+   ```bash
    docker compose ps
-
+   ```
+   
 ## 🛠️ Local Development
  * Backend (/server):
+   ```bash
    go run main.go
-
- * Frontend (/web):
    ```
+ * Frontend (/web):
+   ```bash
    pnpm install
    pnpm run dev
    ```
