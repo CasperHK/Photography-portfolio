@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/solid-router";
+
 type TopNavBarProps = {
   title?: string;
   subtitle?: string;
@@ -8,11 +10,12 @@ export default function TopNavBar(props: TopNavBarProps) {
     <header class="brand">
       <div class="brand-copy">
         <h1>{props.title ?? "Casper Photography"}</h1>
-        <p>{props.subtitle ?? "Selected travel, street, and landscape frames."}</p>
+        <p>{props.subtitle ?? "Moments caught between wandering and wondering."}</p>
       </div>
       <nav class="brand-nav" aria-label="Primary">
-        <a href="/about">About</a>
-        <a href="/gallery">Gallery</a>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Link to="/gallery">Gallery</Link>
       </nav>
     </header>
   );
