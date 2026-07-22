@@ -2,7 +2,7 @@
 > A stunning, high-performance, and immersive photography portfolio website featuring a fullscreen horizontal scroll grid, cinematic animations, and an ultra-slick aesthetic.
 
 ## 🚀 Tech Stack
- * Frontend: Solid.js powered by Rspack / Rsbuild (blazing-fast HMR and compilation with GSAP for fluid horizontal scroll and animations)
+ * Frontend: Solid.js powered by Rspack / Rsbuild (blazing-fast HMR and compilation with GSAP for fluid horizontal scroll and animations) + TanStack
  * Backend: Go HTTP API with chi router and SQLite
  * Database: SQLite (Embedded, lightweight, and blazing fast)
  * Infrastructure: Docker & Docker Compose (Production-ready containerization)
