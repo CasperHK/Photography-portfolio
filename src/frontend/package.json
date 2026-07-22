@@ -11,7 +11,8 @@
   "dependencies": {
     "@tanstack/solid-router": "^1.170.18",
     "gsap": "^3.12.5",
-    "solid-js": "^1.9.0"
+    "solid-js": "^1.9.0",
+    "solid-motionone": "^1.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
