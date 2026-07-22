@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcasper_photography_frontend=self.webpackChunkcasper_photography_frontend||[]).push([["193"],{336(n,e,o){o.r(e),o.d(e,{component:()=>p});var r=(0,o(242).vs)('<div>Hello "/admin/login"!');function p(){return r()}}}]);

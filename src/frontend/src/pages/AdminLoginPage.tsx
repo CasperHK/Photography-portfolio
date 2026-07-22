@@ -50,7 +50,7 @@ export default function AdminLoginPage() {
         localStorage.setItem("adminAccessToken", data.token);
       }
 
-      const redirectUrl = data.redirectUrl ?? "/gallery";
+      const redirectUrl = data.redirectUrl ?? "/admin/dashboard";
       setSuccessMessage("Login successful. Redirecting to management area...");
       window.setTimeout(() => {
         window.location.href = redirectUrl;

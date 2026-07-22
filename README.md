@@ -3,7 +3,7 @@
 
 ## 🚀 Tech Stack
  * Frontend: Solid.js powered by Rspack / Rsbuild (blazing-fast HMR and compilation with GSAP for fluid horizontal scroll and animations) + TanStack
- * Backend: Go HTTP API with chi router and SQLite
+ * Backend: Goravel HTTP API and SQLite
  * Database: SQLite (Embedded, lightweight, and blazing fast)
  * Infrastructure: Docker & Docker Compose (Production-ready containerization)
 
