@@ -7,6 +7,7 @@ export default defineConfig({
     port: 3000,
   },
   source: {
+    tsconfigPath: "./tsconfig.json",
     entry: {
       index: "./src/main.tsx",
     },

@@ -1,17 +1,19 @@
+node_modules
+
 # Go build artifacts
-backend/server
-backend/backend
-backend/*.exe
+src/backend/server
+src/backend/backend
+src/backend/*.exe
 
 # Go test caches
 *.test
 
 # SQLite database (generated at runtime)
-backend/database/database.sqlite
-backend/database/*.sqlite
+src/backend/database/database.sqlite
+src/backend/database/*.sqlite
 
 # Node / frontend
-frontend/node_modules/
+src/frontend/node_modules/
 frontend/dist/
 frontend/.rsbuild/
 
