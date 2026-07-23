@@ -23,7 +23,7 @@ type I18nContextValue = {
 };
 
 const STORAGE_KEY = "portfolio-locale";
-const FALLBACK_LOCALE: Locale = "zh-Hant";
+const FALLBACK_LOCALE: Locale = "en";
 const I18nContext = createContext<I18nContextValue>();
 
 const isLocale = (value: string): value is Locale => {
@@ -36,6 +36,10 @@ const detectLocaleFromTag = (tag: string): Locale | null => {
 
   if (normalized.startsWith("ja")) {
     return "ja";
+  }
+
+  if (normalized.startsWith("en")) {
+    return "en";
   }
 
   if (normalized.startsWith("zh")) {

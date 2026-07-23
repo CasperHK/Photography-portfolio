@@ -1,4 +1,4 @@
-export type Locale = "zh-Hant" | "zh-Hans" | "ja";
+export type Locale = "en" | "zh-Hant" | "zh-Hans" | "ja";
 
 export type GalleryInfo = {
   id: string;
