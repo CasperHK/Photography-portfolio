@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcasper_photography_frontend=self.webpackChunkcasper_photography_frontend||[]).push([["821"],{556(e,r,a){a.r(r),a.d(r,{component:()=>o});var n=a(401),t=a(517),p=a(445);function o(){let e=p.q.useParams();return(0,n.a0)(t.A,{get galleryId(){return e().galleryId}})}}}]);
