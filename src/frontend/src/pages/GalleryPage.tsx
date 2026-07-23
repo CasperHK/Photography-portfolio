@@ -3,6 +3,7 @@ import { createEffect, createMemo, createSignal, For, onMount } from "solid-js";
 import PageFrame from "../components/PageFrame";
 import ScrollTopButton from "../components/buttons/ScrollTopButton";
 import PhotoViewer from "../components/dialogs/PhotoViewer";
+import ShareDialog from "../components/dialogs/ShareDialog";
 import {
   FORCE_DEMO_PHOTOS_BY_ENV,
   createDemoPhotos,
@@ -20,6 +21,8 @@ type GalleryPageProps = {
 export default function GalleryPage(props: GalleryPageProps) {
   const [photos, setPhotos] = createSignal<Photo[]>([]);
   const [activePhoto, setActivePhoto] = createSignal<Photo | null>(null);
+  const [isShareDialogOpen, setIsShareDialogOpen] = createSignal(false);
+  const [shareUrl, setShareUrl] = createSignal("");
   const [galleryScrollEl, setGalleryScrollEl] = createSignal<HTMLElement | null>(null);
   const navigate = useNavigate();
 
@@ -70,10 +73,25 @@ export default function GalleryPage(props: GalleryPageProps) {
   };
 
   const closeViewer = () => {
+    setActivePhoto(null);
     void navigate({
       to: "/gallery/$galleryId",
       params: { galleryId: activeGalleryId() },
     });
+  };
+
+  const openShareDialog = () => {
+    if (typeof window !== "undefined") {
+      setShareUrl(window.location.href);
+    } else {
+      setShareUrl(`/gallery/${activeGalleryId()}`);
+    }
+
+    setIsShareDialogOpen(true);
+  };
+
+  const closeShareDialog = () => {
+    setIsShareDialogOpen(false);
   };
 
   const renderTiles = () => (
@@ -116,6 +134,14 @@ export default function GalleryPage(props: GalleryPageProps) {
           <p class="gallery-kicker">{gallery()!.kicker}</p>
           <h2>{gallery()!.title}</h2>
           <p class="gallery-summary">{gallery()!.summary}</p>
+          <button
+            type="button"
+            class="gallery-share-trigger"
+            aria-label={`Share ${gallery()!.title}`}
+            onClick={openShareDialog}
+          >
+            Share
+          </button>
           <div class="gallery-meta">
             <span>{photos().length || 30} frames</span>
             <span>Click for details</span>
@@ -144,6 +170,12 @@ export default function GalleryPage(props: GalleryPageProps) {
         photo={activePhoto()}
         galleryTitle={gallery()!.title}
         onClose={closeViewer}
+      />
+      <ShareDialog
+        open={isShareDialogOpen()}
+        shareUrl={shareUrl()}
+        galleryTitle={gallery()!.title}
+        onClose={closeShareDialog}
       />
     </PageFrame>
   );

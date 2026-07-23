@@ -1,5 +1,6 @@
 import { defineConfig } from "@rsbuild/core";
 import { pluginBabel } from "@rsbuild/plugin-babel";
+import { pluginSass } from "@rsbuild/plugin-sass";
 import { pluginSolid } from "@rsbuild/plugin-solid";
 import { tanstackRouter } from "@tanstack/router-plugin/rspack";
 
@@ -8,6 +9,7 @@ export default defineConfig({
     pluginBabel({
       include: /\.(?:jsx|tsx)$/,
     }),
+    pluginSass(),
     pluginSolid(),
   ],
   server: {

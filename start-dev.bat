@@ -10,6 +10,7 @@ set "API_BASE_URL=http://localhost:8080/api/v1"
 set "MEDIA_BASE_URL=http://localhost:8080"
 set "FRONTEND_PM=npm"
 set "CHECK_ONLY=0"
+set "NEED_FRONTEND_INSTALL=0"
 
 if /I "%~1"=="--check" set "CHECK_ONLY=1"
 
@@ -47,7 +48,20 @@ if "%CHECK_ONLY%"=="1" (
 )
 
 if not exist "%FRONTEND_DIR%\node_modules" (
-	echo Frontend dependencies not found. Installing with %FRONTEND_PM%...
+	set "NEED_FRONTEND_INSTALL=1"
+	echo Frontend dependencies folder not found.
+) else (
+	pushd "%FRONTEND_DIR%"
+	node -e "require.resolve('@tailwindcss/postcss')" >nul 2>nul
+	if errorlevel 1 (
+		set "NEED_FRONTEND_INSTALL=1"
+		echo Required PostCSS plugin '@tailwindcss/postcss' is missing from frontend dependencies.
+	)
+	popd
+)
+
+if "%NEED_FRONTEND_INSTALL%"=="1" (
+	echo Installing frontend dependencies with %FRONTEND_PM%...
 	pushd "%FRONTEND_DIR%"
 	if /I "%FRONTEND_PM%"=="pnpm" (
 		call pnpm install

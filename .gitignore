@@ -14,6 +14,7 @@ src/backend/database/*.sqlite
 
 # Node / frontend
 src/frontend/node_modules/
+src/frontend/dist/
 frontend/dist/
 frontend/.rsbuild/
 

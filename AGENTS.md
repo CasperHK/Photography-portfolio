@@ -22,6 +22,7 @@ This file is the project playbook for coding agents. Follow it to make safe, pre
 - Shared frontend constants/types should live in small reusable modules in `src/frontend/src/pages` or other focused folders.
 - Keep `src/frontend/src/App.tsx` as compatibility-only unless explicitly asked to make it an app shell again.
 - New pages must include a route file and use TanStack Router conventions.
+- Always use PNPM to add or delete dependencies.
 
 ## 4. Frontend Build Conventions
 

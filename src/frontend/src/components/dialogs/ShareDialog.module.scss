@@ -1,0 +1,109 @@
+.shareDialog {
+  width: min(560px, 100%);
+  padding: clamp(16px, 2.2vw, 24px);
+}
+
+.shareDialogLayout {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 2px 4px 8px;
+}
+
+.shareDialogKicker {
+  margin: 0;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+}
+
+.shareDialogLayout h3 {
+  margin: 0;
+  letter-spacing: 0.03em;
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+}
+
+.shareDialogDescription {
+  margin: 0;
+  color: var(--fog);
+  line-height: 1.55;
+  font-size: 0.95rem;
+}
+
+.shareActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.shareAction {
+  width: 92px;
+  min-height: 92px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background:
+    radial-gradient(circle at 30% 22%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0)),
+    rgba(15, 18, 24, 0.84);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.shareAction:hover,
+.shareAction:focus-visible {
+  border-color: rgba(196, 154, 100, 0.62);
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(196, 154, 100, 0.28);
+  transform: translateY(-2px);
+}
+
+.shareAction:focus-visible {
+  outline: 2px solid rgba(196, 154, 100, 0.72);
+  outline-offset: 2px;
+}
+
+.shareActionGlyph {
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+.shareActionLabel {
+  font-size: 0.64rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.shareCopyStatus {
+  min-height: 1.2em;
+  margin: 2px 0 0;
+  color: rgba(246, 242, 234, 0.82);
+  font-size: 0.78rem;
+}
+
+@media (max-width: 860px) {
+  .shareDialog {
+    padding: 12px;
+  }
+
+  .shareDialogLayout {
+    gap: 10px;
+  }
+
+  .shareActions {
+    gap: 10px;
+  }
+
+  .shareAction {
+    width: 84px;
+    min-height: 84px;
+  }
+}
