@@ -13,6 +13,11 @@ export default function HomePage() {
   let shellRef!: HTMLElement;
   let primaryTrackRef!: HTMLDivElement;
 
+  const normalizeScrollLeft = (value: number, trackWidth: number) => {
+    if (trackWidth <= 0) return 0;
+    return ((value % trackWidth) + trackWidth) % trackWidth;
+  };
+
   onMount(() => {
     const query = new URLSearchParams(window.location.search);
     const forceDemoByQuery = query.get("demo") === "1";
@@ -38,13 +43,8 @@ export default function HomePage() {
       if (delta === 0) return;
 
       const before = shellRef.scrollLeft;
-      shellRef.scrollLeft += delta;
-
-      if (shellRef.scrollLeft >= trackWidth) {
-        shellRef.scrollLeft -= trackWidth;
-      } else if (shellRef.scrollLeft < 0) {
-        shellRef.scrollLeft += trackWidth;
-      }
+      const next = normalizeScrollLeft(before + delta, trackWidth);
+      shellRef.scrollLeft = next;
 
       if (shellRef.scrollLeft !== before) {
         pauseAutoScroll();
@@ -56,10 +56,7 @@ export default function HomePage() {
       if (Date.now() >= pausedUntil) {
         const trackWidth = primaryTrackRef?.scrollWidth ?? 0;
         if (trackWidth > 0) {
-          shellRef.scrollLeft += autoSpeed;
-          if (shellRef.scrollLeft >= trackWidth) {
-            shellRef.scrollLeft -= trackWidth;
-          }
+          shellRef.scrollLeft = normalizeScrollLeft(shellRef.scrollLeft + autoSpeed, trackWidth);
         }
       }
 
