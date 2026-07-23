@@ -19,7 +19,7 @@ export default function PageFrame(props: PageFrameProps) {
       transition={pageLoadMotion.transition}
     >
       {props.children}
-      <footer class="site-footer">
+      <footer class="site-footer footer footer-center text-base-content/70">
         <p>Copyright © 2026 Casper Photography. All rights reserved.</p>
       </footer>
     </Motion.main>

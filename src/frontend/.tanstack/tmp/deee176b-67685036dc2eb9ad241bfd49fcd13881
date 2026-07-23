@@ -49,9 +49,9 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const GalleryGalleryIdRoute = GalleryGalleryIdRouteImport.update({
-  id: '/gallery/$galleryId',
-  path: '/gallery/$galleryId',
-  getParentRoute: () => rootRouteImport,
+  id: '/$galleryId',
+  path: '/$galleryId',
+  getParentRoute: () => GalleryRoute,
 } as any)
 const GalleryGalleryIdPhotoPhotoIdRoute =
   GalleryGalleryIdPhotoPhotoIdRouteImport.update({
@@ -131,7 +131,6 @@ export interface RootRouteChildren {
   GalleriesRoute: typeof GalleriesRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminLoginRoute: typeof AdminLoginRoute
-  GalleryGalleryIdRoute: typeof GalleryGalleryIdRouteWithChildren
 }
 
 declare module '@tanstack/solid-router' {
@@ -180,10 +179,10 @@ declare module '@tanstack/solid-router' {
     }
     '/gallery/$galleryId': {
       id: '/gallery/$galleryId'
-      path: '/gallery/$galleryId'
+      path: '/$galleryId'
       fullPath: '/gallery/$galleryId'
       preLoaderRoute: typeof GalleryGalleryIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof GalleryRoute
     }
     '/gallery/$galleryId/photo/$photoId': {
       id: '/gallery/$galleryId/photo/$photoId'
@@ -195,17 +194,6 @@ declare module '@tanstack/solid-router' {
   }
 }
 
-interface GalleryGalleryIdRouteChildren {
-  GalleryGalleryIdPhotoPhotoIdRoute: typeof GalleryGalleryIdPhotoPhotoIdRoute
-}
-
-const GalleryGalleryIdRouteChildren: GalleryGalleryIdRouteChildren = {
-  GalleryGalleryIdPhotoPhotoIdRoute: GalleryGalleryIdPhotoPhotoIdRoute,
-}
-
-const GalleryGalleryIdRouteWithChildren =
-  GalleryGalleryIdRoute._addFileChildren(GalleryGalleryIdRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -213,7 +201,6 @@ const rootRouteChildren: RootRouteChildren = {
   GalleriesRoute: GalleriesRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminLoginRoute: AdminLoginRoute,
-  GalleryGalleryIdRoute: GalleryGalleryIdRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

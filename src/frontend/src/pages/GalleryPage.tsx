@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "@tanstack/solid-router";
-import { createMemo, createSignal, For, onMount } from "solid-js";
+import { createEffect, createMemo, createSignal, For, onMount } from "solid-js";
 import PageFrame from "../components/PageFrame";
 import ScrollTopButton from "../components/buttons/ScrollTopButton";
 import PhotoViewer from "../components/dialogs/PhotoViewer";
@@ -19,6 +19,7 @@ type GalleryPageProps = {
 
 export default function GalleryPage(props: GalleryPageProps) {
   const [photos, setPhotos] = createSignal<Photo[]>([]);
+  const [activePhoto, setActivePhoto] = createSignal<Photo | null>(null);
   const [galleryScrollEl, setGalleryScrollEl] = createSignal<HTMLElement | null>(null);
   const navigate = useNavigate();
 
@@ -43,14 +44,30 @@ export default function GalleryPage(props: GalleryPageProps) {
 
   const hasPhotos = createMemo(() => photos().length > 0);
 
-  const selectedPhoto = createMemo(() => {
-    if (!props.photoId) return null;
+  createEffect(() => {
+    if (!props.photoId) {
+      setActivePhoto(null);
+      return;
+    }
 
     const parsedPhotoId = Number(props.photoId);
-    if (!Number.isFinite(parsedPhotoId)) return null;
+    if (!Number.isFinite(parsedPhotoId)) {
+      setActivePhoto(null);
+      return;
+    }
 
-    return photos().find((photo) => photo.id === parsedPhotoId) ?? null;
+    setActivePhoto(photos().find((photo) => photo.id === parsedPhotoId) ?? null);
   });
+
+  const openViewer = (photo: Photo, event: MouseEvent) => {
+    event.preventDefault();
+    setActivePhoto(photo);
+
+    void navigate({
+      to: "/gallery/$galleryId/photo/$photoId",
+      params: { galleryId: activeGalleryId(), photoId: String(photo.id) },
+    });
+  };
 
   const closeViewer = () => {
     void navigate({
@@ -67,6 +84,7 @@ export default function GalleryPage(props: GalleryPageProps) {
           to="/gallery/$galleryId/photo/$photoId"
           params={{ galleryId: activeGalleryId(), photoId: String(photo.id) }}
           aria-label={`Open details for ${photo.title}`}
+          onClick={(event) => openViewer(photo, event)}
         >
           <img src={toMediaUrl(photo.thumbUrl)} alt={photo.title} loading="lazy" />
           <span class="gallery-photo-label">{photo.title}</span>
@@ -122,8 +140,8 @@ export default function GalleryPage(props: GalleryPageProps) {
 
       <ScrollTopButton target={galleryScrollEl()} showAfter={140} ariaLabel="Scroll gallery to top" />
       <PhotoViewer
-        open={!!selectedPhoto()}
-        photo={selectedPhoto()}
+        open={!!activePhoto()}
+        photo={activePhoto()}
         galleryTitle={gallery()!.title}
         onClose={closeViewer}
       />

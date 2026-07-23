@@ -12,7 +12,7 @@ function RootComponent() {
   const pageLoadMotion = getPageLoadMotion();
 
   return (
-    <>
+    <div data-theme="night" class="min-h-screen">
       <TopNavBar />
       <Presence exitBeforeEnter>
         <Motion.div
@@ -26,6 +26,6 @@ function RootComponent() {
           <Outlet />
         </Motion.div>
       </Presence>
-    </>
+    </div>
   );
 }

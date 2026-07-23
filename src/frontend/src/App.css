@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
 :root {
   --ink: #f6f2ea;
   --fog: #b7b1a6;
@@ -33,6 +36,26 @@ body {
   /* padding: clamp(18px, 2.7vw, 34px); */
   position: relative;
   padding: 0 0 0rem;
+  background:
+    radial-gradient(140% 130% at 14% 14%, rgb(28 34 52 / 0.62) 0%, rgb(28 34 52 / 0) 54%),
+    radial-gradient(150% 140% at 86% 82%, rgb(13 33 46 / 0.56) 0%, rgb(13 33 46 / 0) 56%),
+    linear-gradient(145deg, #070b12 0%, #0d1320 45%, #161d2e 100%);
+  background-size: 160% 160%, 170% 170%, 100% 100%;
+  animation: page-dark-drift 42s ease-in-out infinite alternate;
+}
+
+@keyframes page-dark-drift {
+  0% {
+    background-position: 12% 16%, 88% 84%, 50% 50%;
+  }
+
+  50% {
+    background-position: 30% 22%, 72% 70%, 50% 50%;
+  }
+
+  100% {
+    background-position: 20% 34%, 84% 58%, 50% 50%;
+  }
 }
 
 .route-motion-layer {
@@ -50,7 +73,7 @@ body {
   justify-content: space-between;
   align-items: center;
   gap: clamp(14px, 2vw, 22px);
-  padding: 16px clamp(16px, 2vw, 22px);
+  padding: 12px clamp(16px, 2vw, 22px);
   border: 0;
   border-radius: 0;
   background: rgba(0, 0, 0, 0.5);
@@ -432,6 +455,9 @@ body {
 }
 
 .photo-viewer-media {
+  position: relative;
+  display: grid;
+  place-items: center;
   margin: 0;
   min-height: 0;
   border-radius: 14px;
@@ -440,12 +466,45 @@ body {
   background: #0f1114;
 }
 
+.photo-viewer-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 17, 20, 0.58);
+  pointer-events: none;
+}
+
+.photo-viewer-spinner {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  border: 3px solid rgba(246, 242, 234, 0.28);
+  border-top-color: rgba(196, 154, 100, 0.95);
+  animation: photo-viewer-spin 0.82s linear infinite;
+}
+
+@keyframes photo-viewer-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .photo-viewer-media img {
+  position: relative;
+  z-index: 1;
   width: 100%;
   max-height: calc(94vh - 120px);
   object-fit: contain;
   display: block;
   background: #0f1114;
+  opacity: 1;
+  transition: opacity 180ms ease;
+}
+
+.photo-viewer-image-loading {
+  opacity: 0;
 }
 
 .photo-viewer-info {
@@ -1038,13 +1097,13 @@ body {
 
 @media (max-width: 860px) {
   .page {
-    padding: 12px;
+    padding: 0;
   }
 
   .brand {
-    top: 12px;
-    left: 12px;
-    right: 12px;
+    top: 0;
+    left: 0;
+    right: 0;
     gap: 12px;
   }
 
@@ -1247,6 +1306,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .page {
+    animation: none;
+  }
+
   .scroll-top-fab {
     transition: none;
     animation: none;

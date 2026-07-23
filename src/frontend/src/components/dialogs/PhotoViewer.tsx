@@ -1,4 +1,4 @@
-import { For, Show, createMemo } from "solid-js";
+import { For, Show, createEffect, createMemo, createSignal, onCleanup } from "solid-js";
 import BaseDialog from "./BaseDialog";
 import { getPhotoExifEntries, toMediaUrl, type Photo } from "../../pages/PortfolioShared";
 
@@ -10,10 +10,55 @@ type PhotoViewerProps = {
 };
 
 export default function PhotoViewer(props: PhotoViewerProps) {
+	const MIN_SPINNER_MS = 450;
 	const exifEntries = createMemo(() => getPhotoExifEntries(props.photo?.exif));
 	const titleId = createMemo(() =>
 		props.photo ? `photo-viewer-title-${props.photo.id}` : "photo-viewer-title"
 	);
+	const [isImageLoading, setIsImageLoading] = createSignal(false);
+	const [spinnerStartedAt, setSpinnerStartedAt] = createSignal(0);
+	let spinnerTimer: number | undefined;
+
+	const clearSpinnerTimer = () => {
+		if (spinnerTimer !== undefined) {
+			window.clearTimeout(spinnerTimer);
+			spinnerTimer = undefined;
+		}
+	};
+
+	const resolveImageLoading = () => {
+		if (typeof window === "undefined") {
+			setIsImageLoading(false);
+			return;
+		}
+
+		const elapsed = performance.now() - spinnerStartedAt();
+		const remaining = Math.max(0, MIN_SPINNER_MS - elapsed);
+
+		clearSpinnerTimer();
+		if (remaining === 0) {
+			setIsImageLoading(false);
+			return;
+		}
+
+		spinnerTimer = window.setTimeout(() => {
+			setIsImageLoading(false);
+			spinnerTimer = undefined;
+		}, remaining);
+	};
+
+	createEffect(() => {
+		const shouldLoad = props.open && !!props.photo;
+		clearSpinnerTimer();
+		setIsImageLoading(shouldLoad);
+		if (shouldLoad && typeof window !== "undefined") {
+			setSpinnerStartedAt(performance.now());
+		}
+	});
+
+	onCleanup(() => {
+		clearSpinnerTimer();
+	});
 
 	return (
 		<BaseDialog
@@ -26,11 +71,32 @@ export default function PhotoViewer(props: PhotoViewerProps) {
 			<Show when={props.photo}>
 				{(photoAccessor) => {
 					const photo = photoAccessor();
+					const photoUrl = toMediaUrl(photo.fileUrl);
 
 					return (
 						<div class="photo-viewer-layout">
-							<figure class="photo-viewer-media">
-								<img src={toMediaUrl(photo.fileUrl)} alt={photo.title} loading="eager" />
+							<figure class="photo-viewer-media" aria-busy={isImageLoading()}>
+								<Show when={isImageLoading()}>
+									<div class="photo-viewer-loading" aria-live="polite" aria-label="Loading photo">
+										<span
+											class="loading loading-spinner loading-lg text-primary photo-viewer-spinner"
+											aria-hidden="true"
+										/>
+									</div>
+								</Show>
+								<img
+									src={photoUrl}
+									alt={photo.title}
+									loading="eager"
+									classList={{ "photo-viewer-image-loading": isImageLoading() }}
+									onLoad={resolveImageLoading}
+									onError={resolveImageLoading}
+									ref={(image) => {
+										if (image.complete) {
+											resolveImageLoading();
+										}
+									}}
+								/>
 							</figure>
 
 							<section class="photo-viewer-info">
