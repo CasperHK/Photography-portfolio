@@ -1,27 +1,24 @@
 import PageFrame from "../components/PageFrame";
+import { useI18n } from "../i18n/context";
 
 export default function ContactMePage() {
+  const { messages } = useI18n();
+
   return (
-    <PageFrame
-      title="Contact Me"
-      subtitle="Share your idea, location, and timeline to start planning the shoot."
-    >
-      <section class="about-shell" aria-label="Contact Casper Photography">
+    <PageFrame title={messages().contact.title} subtitle={messages().contact.subtitle}>
+      <section class="about-shell" aria-label={messages().contact.ariaSection}>
         <div class="about-track">
           <article class="about-card">
-            <h2>Bookings</h2>
-            <p>
-              For editorial, travel, and brand collaborations, send a short brief with dates,
-              location, and expected deliverables.
-            </p>
+            <h2>{messages().contact.bookingsHeading}</h2>
+            <p>{messages().contact.bookingsBody}</p>
           </article>
           <article class="about-card">
-            <h2>Email</h2>
+            <h2>{messages().contact.emailHeading}</h2>
             <p>hello@casperphotography.com</p>
           </article>
           <article class="about-card">
-            <h2>Response Time</h2>
-            <p>Usually within 24 to 48 hours.</p>
+            <h2>{messages().contact.responseHeading}</h2>
+            <p>{messages().contact.responseBody}</p>
           </article>
         </div>
       </section>

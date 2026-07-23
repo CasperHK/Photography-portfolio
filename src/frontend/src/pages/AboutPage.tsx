@@ -1,8 +1,9 @@
 import { For, onCleanup, onMount } from "solid-js";
 import PageFrame from "../components/PageFrame";
-import { ABOUT_PANELS } from "./PortfolioShared";
+import { useI18n } from "../i18n/context";
 
 export default function AboutPage() {
+  const { messages } = useI18n();
   let shellRef!: HTMLElement;
 
   onMount(() => {
@@ -29,13 +30,10 @@ export default function AboutPage() {
   });
 
   return (
-    <PageFrame
-      title="About Casper"
-      subtitle="Visual notes, process, and collaboration details."
-    >
-      <section ref={shellRef} class="about-shell" aria-label="About Casper Photography">
+    <PageFrame title={messages().about.title} subtitle={messages().about.subtitle}>
+      <section ref={shellRef} class="about-shell" aria-label={messages().about.ariaSection}>
         <div class="about-track">
-          <For each={ABOUT_PANELS}>
+          <For each={messages().aboutPanels}>
             {(panel) => (
               <article class="about-card">
                 <h2>{panel.heading}</h2>

@@ -1,6 +1,7 @@
 import { createMemo, createSignal, For, onCleanup, onMount } from "solid-js";
 import PageFrame from "../components/PageFrame";
 import PhotoViewer from "../components/dialogs/PhotoViewer";
+import { useI18n } from "../i18n/context";
 import {
   FORCE_DEMO_PHOTOS_BY_ENV,
   createDemoPhotos,
@@ -10,6 +11,7 @@ import {
 } from "./PortfolioShared";
 
 export default function HomePage() {
+  const { messages } = useI18n();
   const [photos, setPhotos] = createSignal<Photo[]>([]);
   const [selectedPhoto, setSelectedPhoto] = createSignal<Photo | null>(null);
   let shellRef!: HTMLElement;
@@ -75,11 +77,11 @@ export default function HomePage() {
 
     void (async () => {
       if (forceDemoPhotos) {
-        setPhotos(createDemoPhotos(30));
+        setPhotos(createDemoPhotos(30, messages().demo));
         return;
       }
 
-      setPhotos(await loadPortfolioPhotos(30));
+      setPhotos(await loadPortfolioPhotos(30, messages().demo));
     })();
   });
 
@@ -116,11 +118,8 @@ export default function HomePage() {
   };
 
   return (
-    <PageFrame
-      title="Casper Photography"
-      subtitle="Moments caught between wandering and wondering."
-    >
-      <section ref={shellRef} class="mosaic-shell" aria-label="Portfolio gallery">
+    <PageFrame title={messages().nav.title} subtitle={messages().nav.subtitle}>
+      <section ref={shellRef} class="mosaic-shell" aria-label={messages().home.ariaPortfolioGallery}>
         <div class="mosaic-marquee" data-ready={hasPhotos() ? "true" : "false"}>
           <div ref={primaryTrackRef} class="mosaic-track">
             <For each={photos()}>
@@ -128,7 +127,7 @@ export default function HomePage() {
                 <a
                   class={tileClass(photo, idx())}
                   href={toMediaUrl(photo.fileUrl)}
-                  aria-label={`Open ${photo.title} in the photo viewer`}
+                  aria-label={messages().home.openPhotoViewerAria(photo.title)}
                   onClick={(event) => openPhotoViewer(photo, event)}
                 >
                   <img src={toMediaUrl(photo.thumbUrl)} alt={photo.title} loading="lazy" />
@@ -156,7 +155,7 @@ export default function HomePage() {
       <PhotoViewer
         open={selectedPhoto() !== null}
         photo={selectedPhoto()}
-        galleryTitle="Home"
+        galleryTitle={messages().home.galleryTitle}
         onClose={closePhotoViewer}
       />
     </PageFrame>

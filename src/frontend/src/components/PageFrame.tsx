@@ -1,5 +1,6 @@
 import { type ParentProps } from "solid-js";
 import { Motion } from "solid-motionone";
+import { useI18n } from "../i18n/context";
 import { getPageLoadMotion } from "../pages/PortfolioShared";
 
 type PageFrameProps = ParentProps<{
@@ -9,6 +10,7 @@ type PageFrameProps = ParentProps<{
 
 export default function PageFrame(props: PageFrameProps) {
   const pageLoadMotion = getPageLoadMotion();
+  const { messages } = useI18n();
 
   return (
     <Motion.main
@@ -20,7 +22,7 @@ export default function PageFrame(props: PageFrameProps) {
     >
       {props.children}
       <footer class="site-footer footer footer-center text-base-content/70">
-        <p>Copyright © 2026 Casper Photography. All rights reserved.</p>
+        <p>{messages().footer.copyright}</p>
       </footer>
     </Motion.main>
   );

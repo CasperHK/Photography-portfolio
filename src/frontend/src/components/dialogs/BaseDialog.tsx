@@ -1,6 +1,7 @@
 import { Show, createEffect, createSignal, onCleanup, type JSX } from "solid-js";
 import { Motion } from "solid-motionone";
 import { Portal } from "solid-js/web";
+import { useI18n } from "../../i18n/context";
 
 const DIALOG_ANIMATION_MS = 180;
 
@@ -15,6 +16,7 @@ type BaseDialogProps = {
 
 export default function BaseDialog(props: BaseDialogProps) {
 	const [isRendered, setIsRendered] = createSignal(props.open);
+	const { messages } = useI18n();
 	let closeTimer: number | undefined;
 
 	const clearCloseTimer = () => {
@@ -105,7 +107,7 @@ export default function BaseDialog(props: BaseDialogProps) {
 						<button
 							type="button"
 							class="dialog-close-button"
-							aria-label="Close dialog"
+							aria-label={messages().baseDialog.closeAria}
 							onClick={props.onClose}
 						>
 							×

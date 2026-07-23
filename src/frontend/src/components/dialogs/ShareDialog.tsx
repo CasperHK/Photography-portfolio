@@ -1,5 +1,6 @@
 import { For, createEffect, createMemo, createSignal, onCleanup } from "solid-js";
 import BaseDialog from "./BaseDialog";
+import { useI18n } from "../../i18n/context";
 import styles from "./ShareDialog.module.scss";
 
 type ShareDialogProps = {
@@ -19,6 +20,7 @@ type ShareAction = {
 const SHARE_TITLE_ID = "share-dialog-title";
 
 export default function ShareDialog(props: ShareDialogProps) {
+	const { messages } = useI18n();
 	const [copyStatus, setCopyStatus] = createSignal<"idle" | "success" | "error">("idle");
 	let copyStatusTimer: number | undefined;
 
@@ -129,25 +131,25 @@ export default function ShareDialog(props: ShareDialogProps) {
 			open={props.open}
 			onClose={props.onClose}
 			labelledBy={SHARE_TITLE_ID}
-			ariaLabel={`Share ${props.galleryTitle}`}
+			ariaLabel={messages().shareDialog.ariaLabel(props.galleryTitle)}
 			contentClass={styles.shareDialog}
 		>
 			<div class={styles.shareDialogLayout}>
 				<p class={styles.shareDialogKicker}>{props.galleryTitle}</p>
-				<h3 id={SHARE_TITLE_ID}>Share This Page</h3>
-				<p class={styles.shareDialogDescription}>Choose where to share the current link.</p>
+				<h3 id={SHARE_TITLE_ID}>{messages().shareDialog.title}</h3>
+				<p class={styles.shareDialogDescription}>{messages().shareDialog.description}</p>
 
-				<div class={styles.shareActions} aria-label="Share options">
+				<div class={styles.shareActions} aria-label={messages().shareDialog.optionsAria}>
 					<button
 						type="button"
 						class={styles.shareAction}
 						onClick={() => {
 							void handleCopyLink();
 						}}
-						aria-label="Copy current link"
+						aria-label={messages().shareDialog.copyAria}
 					>
 						<span class={styles.shareActionGlyph} aria-hidden="true">CP</span>
-						<span class={styles.shareActionLabel}>Copy Link</span>
+						<span class={styles.shareActionLabel}>{messages().shareDialog.copyLabel}</span>
 					</button>
 
 					<For each={shareActions()}>
@@ -157,7 +159,7 @@ export default function ShareDialog(props: ShareDialogProps) {
 								href={action.href}
 								target="_blank"
 								rel="noopener noreferrer"
-								aria-label={`Share to ${action.label}`}
+								aria-label={messages().shareDialog.shareToAria(action.label)}
 							>
 								<span class={styles.shareActionGlyph} aria-hidden="true">{action.glyph}</span>
 								<span class={styles.shareActionLabel}>{action.label}</span>
@@ -167,8 +169,8 @@ export default function ShareDialog(props: ShareDialogProps) {
 				</div>
 
 				<p class={styles.shareCopyStatus} aria-live="polite">
-					{copyStatus() === "success" ? "Link copied to clipboard." : ""}
-					{copyStatus() === "error" ? "Could not copy link. Please copy from the address bar." : ""}
+					{copyStatus() === "success" ? messages().shareDialog.copySuccess : ""}
+					{copyStatus() === "error" ? messages().shareDialog.copyError : ""}
 				</p>
 			</div>
 		</BaseDialog>

@@ -1,6 +1,7 @@
 import { Outlet, createRootRoute, useLocation } from "@tanstack/solid-router";
 import { Motion, Presence } from "solid-motionone";
 import TopNavBar from "../components/TopNavBar";
+import { I18nProvider } from "../i18n/context";
 import { getPageLoadMotion } from "../pages/PortfolioShared";
 
 export const Route = createRootRoute({
@@ -12,20 +13,22 @@ function RootComponent() {
   const pageLoadMotion = getPageLoadMotion();
 
   return (
-    <div data-theme="night" class="min-h-screen">
-      <TopNavBar />
-      <Presence exitBeforeEnter>
-        <Motion.div
-          key={location.pathname}
-          class="route-motion-layer"
-          initial={pageLoadMotion.initial}
-          animate={pageLoadMotion.animate}
-          exit={pageLoadMotion.exit}
-          transition={pageLoadMotion.transition}
-        >
-          <Outlet />
-        </Motion.div>
-      </Presence>
-    </div>
+    <I18nProvider>
+      <div data-theme="night" class="min-h-screen">
+        <TopNavBar />
+        <Presence exitBeforeEnter>
+          <Motion.div
+            key={location.pathname}
+            class="route-motion-layer"
+            initial={pageLoadMotion.initial}
+            animate={pageLoadMotion.animate}
+            exit={pageLoadMotion.exit}
+            transition={pageLoadMotion.transition}
+          >
+            <Outlet />
+          </Motion.div>
+        </Presence>
+      </div>
+    </I18nProvider>
   );
 }

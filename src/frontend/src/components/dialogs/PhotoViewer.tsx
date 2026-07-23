@@ -1,5 +1,6 @@
 import { For, Show, createEffect, createMemo, createSignal, onCleanup } from "solid-js";
 import BaseDialog from "./BaseDialog";
+import { useI18n } from "../../i18n/context";
 import { getPhotoExifEntries, toMediaUrl, type Photo } from "../../pages/PortfolioShared";
 import styles from "./PhotoViewer.module.scss";
 
@@ -12,7 +13,8 @@ type PhotoViewerProps = {
 
 export default function PhotoViewer(props: PhotoViewerProps) {
 	const MIN_SPINNER_MS = 450;
-	const exifEntries = createMemo(() => getPhotoExifEntries(props.photo?.exif));
+	const { messages } = useI18n();
+	const exifEntries = createMemo(() => getPhotoExifEntries(props.photo?.exif, messages().exifLabels));
 	const titleId = createMemo(() =>
 		props.photo ? `photo-viewer-title-${props.photo.id}` : "photo-viewer-title"
 	);
@@ -66,7 +68,7 @@ export default function PhotoViewer(props: PhotoViewerProps) {
 			open={props.open && !!props.photo}
 			onClose={props.onClose}
 			labelledBy={titleId()}
-			ariaLabel={props.photo ? `Photo detail: ${props.photo.title}` : `${props.galleryTitle} photo detail`}
+			ariaLabel={messages().photoViewer.ariaLabel(props.photo?.title ?? "", props.galleryTitle)}
 			contentClass={styles.photoViewerDialog}
 		>
 			<Show when={props.photo}>
@@ -78,7 +80,11 @@ export default function PhotoViewer(props: PhotoViewerProps) {
 						<div class={styles.photoViewerLayout}>
 							<figure class={styles.photoViewerMedia} aria-busy={isImageLoading()}>
 								<Show when={isImageLoading()}>
-									<div class={styles.photoViewerLoading} aria-live="polite" aria-label="Loading photo">
+									<div
+										class={styles.photoViewerLoading}
+										aria-live="polite"
+										aria-label={messages().photoViewer.loadingAria}
+									>
 										<span
 											class={`loading loading-spinner loading-lg text-primary ${styles.photoViewerSpinner}`}
 											aria-hidden="true"
@@ -108,8 +114,8 @@ export default function PhotoViewer(props: PhotoViewerProps) {
 								</Show>
 
 								<Show when={exifEntries().length > 0}>
-									<div class={styles.photoViewerMetadata} aria-label="Photo metadata">
-										<h4>EXIF Metadata</h4>
+									<div class={styles.photoViewerMetadata} aria-label={messages().photoViewer.metadataAria}>
+										<h4>{messages().photoViewer.metadataTitle}</h4>
 										<dl>
 											<For each={exifEntries()}>
 												{(entry) => (

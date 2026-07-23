@@ -4,10 +4,10 @@ import PageFrame from "../components/PageFrame";
 import ScrollTopButton from "../components/buttons/ScrollTopButton";
 import PhotoViewer from "../components/dialogs/PhotoViewer";
 import ShareDialog from "../components/dialogs/ShareDialog";
+import { useI18n } from "../i18n/context";
 import {
   FORCE_DEMO_PHOTOS_BY_ENV,
   createDemoPhotos,
-  getGalleryById,
   loadPortfolioPhotos,
   toMediaUrl,
   type Photo,
@@ -19,6 +19,7 @@ type GalleryPageProps = {
 };
 
 export default function GalleryPage(props: GalleryPageProps) {
+  const { messages } = useI18n();
   const [photos, setPhotos] = createSignal<Photo[]>([]);
   const [activePhoto, setActivePhoto] = createSignal<Photo | null>(null);
   const [isShareDialogOpen, setIsShareDialogOpen] = createSignal(false);
@@ -26,7 +27,7 @@ export default function GalleryPage(props: GalleryPageProps) {
   const [galleryScrollEl, setGalleryScrollEl] = createSignal<HTMLElement | null>(null);
   const navigate = useNavigate();
 
-  const gallery = createMemo(() => getGalleryById(props.galleryId));
+  const gallery = createMemo(() => messages().galleries[props.galleryId] ?? null);
   const hasGallery = createMemo(() => gallery() !== null);
   const activeGalleryId = createMemo(() => gallery()?.id ?? "1");
 
@@ -37,11 +38,11 @@ export default function GalleryPage(props: GalleryPageProps) {
 
     void (async () => {
       if (forceDemoPhotos) {
-        setPhotos(createDemoPhotos(30));
+        setPhotos(createDemoPhotos(30, messages().demo));
         return;
       }
 
-      setPhotos(await loadPortfolioPhotos(30));
+      setPhotos(await loadPortfolioPhotos(30, messages().demo));
     })();
   });
 
@@ -101,7 +102,7 @@ export default function GalleryPage(props: GalleryPageProps) {
           class="gallery-photo"
           to="/gallery/$galleryId/photo/$photoId"
           params={{ galleryId: activeGalleryId(), photoId: String(photo.id) }}
-          aria-label={`Open details for ${photo.title}`}
+          aria-label={messages().galleryPage.openDetailsAria(photo.title)}
           onClick={(event) => openViewer(photo, event)}
         >
           <img src={toMediaUrl(photo.thumbUrl)} alt={photo.title} loading="lazy" />
@@ -113,14 +114,12 @@ export default function GalleryPage(props: GalleryPageProps) {
 
   if (!hasGallery()) {
     return (
-      <PageFrame title="Gallery" subtitle="This gallery could not be found.">
-        <section class="gallery-layout" aria-label="Gallery not found">
+      <PageFrame title={messages().galleryPage.fallbackTitle} subtitle={messages().galleryPage.notFoundSubtitle}>
+        <section class="gallery-layout" aria-label={messages().galleryPage.ariaNotFound}>
           <aside class="gallery-sidebar">
-            <p class="gallery-kicker">Archive</p>
-            <h2>Not Found</h2>
-            <p class="gallery-summary">
-              This gallery identifier is not available yet. Try gallery 1.
-            </p>
+            <p class="gallery-kicker">{messages().galleryPage.fallbackKicker}</p>
+            <h2>{messages().galleryPage.notFoundHeading}</h2>
+            <p class="gallery-summary">{messages().galleryPage.notFoundSummary}</p>
           </aside>
         </section>
       </PageFrame>
@@ -129,7 +128,7 @@ export default function GalleryPage(props: GalleryPageProps) {
 
   return (
     <PageFrame title={gallery()!.title} subtitle={gallery()!.subtitle}>
-      <section class="gallery-layout" aria-label="Portfolio gallery">
+      <section class="gallery-layout" aria-label={messages().galleryPage.ariaPortfolio}>
         <aside class="gallery-sidebar">
           <p class="gallery-kicker">{gallery()!.kicker}</p>
           <h2>{gallery()!.title}</h2>
@@ -137,16 +136,16 @@ export default function GalleryPage(props: GalleryPageProps) {
           <button
             type="button"
             class="gallery-share-trigger"
-            aria-label={`Share ${gallery()!.title}`}
+            aria-label={messages().galleryPage.shareAria(gallery()!.title)}
             onClick={openShareDialog}
           >
-            Share
+            {messages().galleryPage.shareButton}
           </button>
           <div class="gallery-meta">
-            <span>{photos().length || 30} frames</span>
-            <span>Click for details</span>
+            <span>{messages().galleryPage.framesCount(photos().length || 30)}</span>
+            <span>{messages().galleryPage.clickForDetails}</span>
           </div>
-          <ul class="gallery-notes" aria-label="Gallery notes">
+          <ul class="gallery-notes" aria-label={messages().galleryPage.notesAria}>
             <For each={gallery()!.notes}>{(note) => <li>{note}</li>}</For>
           </ul>
         </aside>
@@ -154,7 +153,7 @@ export default function GalleryPage(props: GalleryPageProps) {
         <div class="gallery-content">
           <section
             class="gallery-grid-shell"
-            aria-label="Portfolio gallery stream"
+            aria-label={messages().galleryPage.ariaStream}
             ref={setGalleryScrollEl}
           >
             <div class="gallery-grid" data-ready={hasPhotos() ? "true" : "false"}>
@@ -164,7 +163,11 @@ export default function GalleryPage(props: GalleryPageProps) {
         </div>
       </section>
 
-      <ScrollTopButton target={galleryScrollEl()} showAfter={140} ariaLabel="Scroll gallery to top" />
+      <ScrollTopButton
+        target={galleryScrollEl()}
+        showAfter={140}
+        ariaLabel={messages().galleryPage.scrollTopAria}
+      />
       <PhotoViewer
         open={!!activePhoto()}
         photo={activePhoto()}
