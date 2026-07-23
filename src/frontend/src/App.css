@@ -257,6 +257,65 @@ body {
   align-content: start;
 }
 
+.gallery-index-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(250px, 24vw, 360px), 1fr));
+  gap: clamp(14px, 1.8vw, 20px);
+  align-content: start;
+}
+
+.gallery-card {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  min-height: 100%;
+  padding: clamp(18px, 2vw, 24px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(15, 18, 24, 0.82);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.gallery-card:hover,
+.gallery-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(196, 154, 100, 0.55);
+  box-shadow: 0 28px 52px rgba(0, 0, 0, 0.36);
+}
+
+.gallery-card-kicker {
+  margin: 0;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+}
+
+.gallery-card h3 {
+  margin: 0;
+  font-size: clamp(1.4rem, 2vw, 1.9rem);
+  line-height: 1;
+}
+
+.gallery-card-subtitle,
+.gallery-card-summary {
+  margin: 0;
+  color: var(--fog);
+  line-height: 1.6;
+}
+
+.gallery-card-link {
+  color: var(--ink);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .gallery-photo {
   position: relative;
   width: 100%;

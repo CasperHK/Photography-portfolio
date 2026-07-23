@@ -108,6 +108,23 @@ export const createDemoPhotos = (count = 30): Photo[] => {
   });
 };
 
+export const loadPortfolioPhotos = async (count = 30): Promise<Photo[]> => {
+  try {
+    const res = await fetch(`${API_BASE}/albums/portfolio/photos`);
+
+    if (!res.ok) {
+      return createDemoPhotos(count);
+    }
+
+    const data = await res.json();
+    const fetched = Array.isArray(data.photos) ? data.photos : [];
+
+    return fetched.length ? fetched : createDemoPhotos(count);
+  } catch {
+    return createDemoPhotos(count);
+  }
+};
+
 export const toMediaUrl = (path: string) =>
   /^https?:\/\//i.test(path) ? path : `${MEDIA_BASE}${path}`;
 
@@ -115,7 +132,7 @@ export const GALLERIES: Record<string, GalleryInfo> = {
   "1": {
     id: "1",
     kicker: "Archive",
-    title: "Gallery",
+    title: "Harbor Light",
     subtitle: "A structured edit with notes, sequencing, and vertical studies.",
     summary:
       "A horizontal edit of field notes, road edges, weather, and passing light.",
@@ -125,7 +142,61 @@ export const GALLERIES: Record<string, GalleryInfo> = {
       "Each frame includes title, description, and available camera metadata.",
     ],
   },
+  "2": {
+    id: "2",
+    kicker: "City",
+    title: "Midnight Crossings",
+    subtitle: "Neon spill, wet concrete, and brief gestures between trains.",
+    summary:
+      "A night-street collection built around reflections, compressed movement, and layered signage.",
+    notes: [
+      "Dense urban frames with long shadows and reflective surfaces.",
+      "Built for slower reading, with recurring figures and mirrored storefronts.",
+      "Best viewed as a continuous sequence rather than isolated frames.",
+    ],
+  },
+  "3": {
+    id: "3",
+    kicker: "Terrain",
+    title: "Highland Weather",
+    subtitle: "Ridges, roadside fog, and changing light over open ground.",
+    summary:
+      "A landscape edit focused on altitude, low-contrast weather, and quiet horizon studies.",
+    notes: [
+      "Wider compositions anchored by mist, grass, and distant structures.",
+      "Sequencing moves from cold dawn light into flatter afternoon weather.",
+      "Includes a mix of broad views and compressed telephoto studies.",
+    ],
+  },
+  "4": {
+    id: "4",
+    kicker: "Travel",
+    title: "Platform Notes",
+    subtitle: "Departures, waiting rooms, and overlooked transit rituals.",
+    summary:
+      "A documentary-style set from stations, ferries, and roadside pauses stitched into one travel diary.",
+    notes: [
+      "Frames center on routine gestures, bags, tickets, and transitional space.",
+      "Color stays restrained to emphasize atmosphere and repetition.",
+      "Pairs environmental images with tighter observational details.",
+    ],
+  },
+  "5": {
+    id: "5",
+    kicker: "Sea Edge",
+    title: "Salt and Concrete",
+    subtitle: "Breakwaters, harbor walls, and the geometry of the waterfront.",
+    summary:
+      "An architectural shoreline sequence combining industrial texture with open water and haze.",
+    notes: [
+      "Built around shape, negative space, and repeated structural lines.",
+      "Alternates between minimal wide frames and close surface studies.",
+      "Keeps the edit quiet and spare, with emphasis on texture.",
+    ],
+  },
 };
+
+export const getGalleries = () => Object.values(GALLERIES);
 
 export const getGalleryById = (galleryId: string) => GALLERIES[galleryId] ?? null;
 

@@ -4,10 +4,10 @@ import PageFrame from "../components/PageFrame";
 import ScrollTopButton from "../components/buttons/ScrollTopButton";
 import PhotoViewer from "../components/dialogs/PhotoViewer";
 import {
-  API_BASE,
   FORCE_DEMO_PHOTOS_BY_ENV,
   createDemoPhotos,
   getGalleryById,
+  loadPortfolioPhotos,
   toMediaUrl,
   type Photo,
 } from "./PortfolioShared";
@@ -37,15 +37,7 @@ export default function GalleryPage(props: GalleryPageProps) {
         return;
       }
 
-      try {
-        const res = await fetch(`${API_BASE}/albums/portfolio/photos`);
-        const data = await res.json();
-        const fetched = data.photos ?? [];
-        setPhotos(fetched.length ? fetched : createDemoPhotos(30));
-      } catch (err) {
-        console.error("Failed to fetch photos:", err);
-        setPhotos(createDemoPhotos(30));
-      }
+      setPhotos(await loadPortfolioPhotos(30));
     })();
   });
 

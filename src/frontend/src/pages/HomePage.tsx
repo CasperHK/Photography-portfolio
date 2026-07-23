@@ -2,9 +2,9 @@ import { createMemo, createSignal, For, onCleanup, onMount } from "solid-js";
 import PageFrame from "../components/PageFrame";
 import PhotoViewer from "../components/dialogs/PhotoViewer";
 import {
-  API_BASE,
   FORCE_DEMO_PHOTOS_BY_ENV,
   createDemoPhotos,
+  loadPortfolioPhotos,
   toMediaUrl,
   type Photo,
 } from "./PortfolioShared";
@@ -79,15 +79,7 @@ export default function HomePage() {
         return;
       }
 
-      try {
-        const res = await fetch(`${API_BASE}/albums/portfolio/photos`);
-        const data = await res.json();
-        const fetched = data.photos ?? [];
-        setPhotos(fetched.length ? fetched : createDemoPhotos(30));
-      } catch (err) {
-        console.error("Failed to fetch photos:", err);
-        setPhotos(createDemoPhotos(30));
-      }
+      setPhotos(await loadPortfolioPhotos(30));
     })();
   });
 
