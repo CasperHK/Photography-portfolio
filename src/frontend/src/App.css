@@ -617,7 +617,7 @@ body {
   min-height: 620px;
   padding: clamp(68px, 10vh, 100px) 0 clamp(22px, 4vh, 38px);
   align-content: stretch;
-  margin: 0px max(8px, min(1.2vw, 16px));
+  margin: 0px max(8px, min(1.2vw, 8px));
 }
 
 .mosaic-track-clone {
