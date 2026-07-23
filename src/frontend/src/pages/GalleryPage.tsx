@@ -1,5 +1,6 @@
 import { createMemo, createSignal, For, onMount } from "solid-js";
 import PageFrame from "../components/PageFrame";
+import ScrollTopButton from "../components/buttons/ScrollTopButton";
 import {
   API_BASE,
   FORCE_DEMO_PHOTOS_BY_ENV,
@@ -11,6 +12,7 @@ import {
 
 export default function GalleryPage() {
   const [photos, setPhotos] = createSignal<Photo[]>([]);
+  const [galleryScrollEl, setGalleryScrollEl] = createSignal<HTMLElement | null>(null);
 
   onMount(() => {
     const query = new URLSearchParams(window.location.search);
@@ -83,13 +85,19 @@ export default function GalleryPage() {
         </aside>
 
         <div class="gallery-content">
-          <section class="gallery-grid-shell" aria-label="Portfolio gallery stream">
+          <section
+            class="gallery-grid-shell"
+            aria-label="Portfolio gallery stream"
+            ref={setGalleryScrollEl}
+          >
             <div class="gallery-grid" data-ready={hasPhotos() ? "true" : "false"}>
               {renderTiles(false)}
             </div>
           </section>
         </div>
       </section>
+
+      <ScrollTopButton target={galleryScrollEl()} showAfter={140} ariaLabel="Scroll gallery to top" />
     </PageFrame>
   );
 }
