@@ -15,7 +15,9 @@ export default function TopNavBar(props: TopNavBarProps) {
       <nav class="brand-nav" aria-label="Primary">
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
-        <Link to="/gallery">Gallery</Link>
+        <Link to="/gallery/$galleryId" params={{ galleryId: "1" }}>
+          Gallery
+        </Link>
         <Link to="/contact-me">Contact Me</Link>
       </nav>
     </header>

@@ -1,18 +1,30 @@
+import { Link, useNavigate } from "@tanstack/solid-router";
 import { createMemo, createSignal, For, onMount } from "solid-js";
 import PageFrame from "../components/PageFrame";
 import ScrollTopButton from "../components/buttons/ScrollTopButton";
+import PhotoViewer from "../components/dialogs/PhotoViewer";
 import {
   API_BASE,
   FORCE_DEMO_PHOTOS_BY_ENV,
-  GALLERY_NOTES,
   createDemoPhotos,
+  getGalleryById,
   toMediaUrl,
   type Photo,
 } from "./PortfolioShared";
 
-export default function GalleryPage() {
+type GalleryPageProps = {
+  galleryId: string;
+  photoId?: string;
+};
+
+export default function GalleryPage(props: GalleryPageProps) {
   const [photos, setPhotos] = createSignal<Photo[]>([]);
   const [galleryScrollEl, setGalleryScrollEl] = createSignal<HTMLElement | null>(null);
+  const navigate = useNavigate();
+
+  const gallery = createMemo(() => getGalleryById(props.galleryId));
+  const hasGallery = createMemo(() => gallery() !== null);
+  const activeGalleryId = createMemo(() => gallery()?.id ?? "1");
 
   onMount(() => {
     const query = new URLSearchParams(window.location.search);
@@ -39,48 +51,67 @@ export default function GalleryPage() {
 
   const hasPhotos = createMemo(() => photos().length > 0);
 
-  const renderTiles = (clone = false) => (
+  const selectedPhoto = createMemo(() => {
+    if (!props.photoId) return null;
+
+    const parsedPhotoId = Number(props.photoId);
+    if (!Number.isFinite(parsedPhotoId)) return null;
+
+    return photos().find((photo) => photo.id === parsedPhotoId) ?? null;
+  });
+
+  const closeViewer = () => {
+    void navigate({
+      to: "/gallery/$galleryId",
+      params: { galleryId: activeGalleryId() },
+    });
+  };
+
+  const renderTiles = () => (
     <For each={photos()}>
       {(photo) => (
-        <a
+        <Link
           class="gallery-photo"
-          href={toMediaUrl(photo.fileUrl)}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={clone ? undefined : `Open ${photo.title} in a new tab`}
-          tabIndex={clone ? -1 : undefined}
+          to="/gallery/$galleryId/photo/$photoId"
+          params={{ galleryId: activeGalleryId(), photoId: String(photo.id) }}
+          aria-label={`Open details for ${photo.title}`}
         >
-          <img
-            src={toMediaUrl(photo.thumbUrl)}
-            alt={clone ? "" : photo.title}
-            loading="lazy"
-          />
-          <span class="gallery-photo-label" aria-hidden={clone ? "true" : undefined}>
-            {photo.title}
-          </span>
-        </a>
+          <img src={toMediaUrl(photo.thumbUrl)} alt={photo.title} loading="lazy" />
+          <span class="gallery-photo-label">{photo.title}</span>
+        </Link>
       )}
     </For>
   );
 
+  if (!hasGallery()) {
+    return (
+      <PageFrame title="Gallery" subtitle="This gallery could not be found.">
+        <section class="gallery-layout" aria-label="Gallery not found">
+          <aside class="gallery-sidebar">
+            <p class="gallery-kicker">Archive</p>
+            <h2>Not Found</h2>
+            <p class="gallery-summary">
+              This gallery identifier is not available yet. Try gallery 1.
+            </p>
+          </aside>
+        </section>
+      </PageFrame>
+    );
+  }
+
   return (
-    <PageFrame
-      title="Gallery"
-      subtitle="A structured edit with notes, sequencing, and vertical studies."
-    >
+    <PageFrame title={gallery()!.title} subtitle={gallery()!.subtitle}>
       <section class="gallery-layout" aria-label="Portfolio gallery">
         <aside class="gallery-sidebar">
-          <p class="gallery-kicker">Archive</p>
-          <h2>Gallery</h2>
-          <p class="gallery-summary">
-            A horizontal edit of field notes, road edges, weather, and passing light.
-          </p>
+          <p class="gallery-kicker">{gallery()!.kicker}</p>
+          <h2>{gallery()!.title}</h2>
+          <p class="gallery-summary">{gallery()!.summary}</p>
           <div class="gallery-meta">
             <span>{photos().length || 30} frames</span>
-            <span>Continuous scroll</span>
+            <span>Click for details</span>
           </div>
           <ul class="gallery-notes" aria-label="Gallery notes">
-            <For each={GALLERY_NOTES}>{(note) => <li>{note}</li>}</For>
+            <For each={gallery()!.notes}>{(note) => <li>{note}</li>}</For>
           </ul>
         </aside>
 
@@ -91,13 +122,19 @@ export default function GalleryPage() {
             ref={setGalleryScrollEl}
           >
             <div class="gallery-grid" data-ready={hasPhotos() ? "true" : "false"}>
-              {renderTiles(false)}
+              {renderTiles()}
             </div>
           </section>
         </div>
       </section>
 
       <ScrollTopButton target={galleryScrollEl()} showAfter={140} ariaLabel="Scroll gallery to top" />
+      <PhotoViewer
+        open={!!selectedPhoto()}
+        photo={selectedPhoto()}
+        galleryTitle={gallery()!.title}
+        onClose={closeViewer}
+      />
     </PageFrame>
   );
 }

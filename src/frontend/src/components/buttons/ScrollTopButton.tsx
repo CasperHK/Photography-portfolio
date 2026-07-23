@@ -9,6 +9,7 @@ type ScrollTopButtonProps = {
 export default function ScrollTopButton(props: ScrollTopButtonProps) {
 	const [isVisible, setIsVisible] = createSignal(false);
 	const [isAutoScrolling, setIsAutoScrolling] = createSignal(false);
+	const [hasAppearedOnce, setHasAppearedOnce] = createSignal(false);
 	let scrollAnimationFrame: number | null = null;
 
 	createEffect(() => {
@@ -89,10 +90,16 @@ export default function ScrollTopButton(props: ScrollTopButtonProps) {
 
 	const shouldShow = () => isVisible() || isAutoScrolling();
 
+	createEffect(() => {
+		if (shouldShow()) {
+			setHasAppearedOnce(true);
+		}
+	});
+
 	return (
 		<button
 			type="button"
-			class={`scroll-top-fab ${shouldShow() ? "is-visible" : "is-hidden"}`}
+			class={`scroll-top-fab ${shouldShow() ? "is-visible" : "is-hidden"} ${hasAppearedOnce() ? "has-appeared" : ""}`}
 			onClick={scrollToTop}
 			aria-label={props.ariaLabel ?? "Scroll to top"}
 			tabIndex={shouldShow() ? 0 : -1}

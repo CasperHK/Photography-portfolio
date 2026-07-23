@@ -6,5 +6,5 @@ export const Route = createFileRoute("/gallery")({
 });
 
 function GalleryRoute() {
-  return <GalleryPage />;
+  return <GalleryPage galleryId="1" />;
 }

@@ -15,6 +15,8 @@ import { Route as ContactMeRouteImport } from './routes/contact-me'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as GalleryGalleryIdRouteImport } from './routes/gallery/$galleryId'
+import { Route as GalleryGalleryIdPhotoPhotoIdRouteImport } from './routes/gallery/$galleryId/photo/$photoId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,31 +48,48 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
   path: '/admin/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GalleryGalleryIdRoute = GalleryGalleryIdRouteImport.update({
+  id: '/$galleryId',
+  path: '/$galleryId',
+  getParentRoute: () => GalleryRoute,
+} as any)
+const GalleryGalleryIdPhotoPhotoIdRoute =
+  GalleryGalleryIdPhotoPhotoIdRouteImport.update({
+    id: '/photo/$photoId',
+    path: '/photo/$photoId',
+    getParentRoute: () => GalleryGalleryIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact-me': typeof ContactMeRoute
-  '/gallery': typeof GalleryRoute
+  '/gallery': typeof GalleryRouteWithChildren
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/login': typeof AdminLoginRoute
+  '/gallery/$galleryId': typeof GalleryGalleryIdRouteWithChildren
+  '/gallery/$galleryId/photo/$photoId': typeof GalleryGalleryIdPhotoPhotoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact-me': typeof ContactMeRoute
-  '/gallery': typeof GalleryRoute
+  '/gallery': typeof GalleryRouteWithChildren
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/login': typeof AdminLoginRoute
+  '/gallery/$galleryId': typeof GalleryGalleryIdRouteWithChildren
+  '/gallery/$galleryId/photo/$photoId': typeof GalleryGalleryIdPhotoPhotoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact-me': typeof ContactMeRoute
-  '/gallery': typeof GalleryRoute
+  '/gallery': typeof GalleryRouteWithChildren
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/login': typeof AdminLoginRoute
+  '/gallery/$galleryId': typeof GalleryGalleryIdRouteWithChildren
+  '/gallery/$galleryId/photo/$photoId': typeof GalleryGalleryIdPhotoPhotoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +100,8 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/admin/dashboard'
     | '/admin/login'
+    | '/gallery/$galleryId'
+    | '/gallery/$galleryId/photo/$photoId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +110,8 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/admin/dashboard'
     | '/admin/login'
+    | '/gallery/$galleryId'
+    | '/gallery/$galleryId/photo/$photoId'
   id:
     | '__root__'
     | '/'
@@ -97,13 +120,15 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/admin/dashboard'
     | '/admin/login'
+    | '/gallery/$galleryId'
+    | '/gallery/$galleryId/photo/$photoId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactMeRoute: typeof ContactMeRoute
-  GalleryRoute: typeof GalleryRoute
+  GalleryRoute: typeof GalleryRouteWithChildren
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminLoginRoute: typeof AdminLoginRoute
 }
@@ -152,14 +177,50 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gallery/$galleryId': {
+      id: '/gallery/$galleryId'
+      path: '/$galleryId'
+      fullPath: '/gallery/$galleryId'
+      preLoaderRoute: typeof GalleryGalleryIdRouteImport
+      parentRoute: typeof GalleryRoute
+    }
+    '/gallery/$galleryId/photo/$photoId': {
+      id: '/gallery/$galleryId/photo/$photoId'
+      path: '/photo/$photoId'
+      fullPath: '/gallery/$galleryId/photo/$photoId'
+      preLoaderRoute: typeof GalleryGalleryIdPhotoPhotoIdRouteImport
+      parentRoute: typeof GalleryGalleryIdRoute
+    }
   }
 }
+
+interface GalleryGalleryIdRouteChildren {
+  GalleryGalleryIdPhotoPhotoIdRoute: typeof GalleryGalleryIdPhotoPhotoIdRoute
+}
+
+const GalleryGalleryIdRouteChildren: GalleryGalleryIdRouteChildren = {
+  GalleryGalleryIdPhotoPhotoIdRoute: GalleryGalleryIdPhotoPhotoIdRoute,
+}
+
+const GalleryGalleryIdRouteWithChildren =
+  GalleryGalleryIdRoute._addFileChildren(GalleryGalleryIdRouteChildren)
+
+interface GalleryRouteChildren {
+  GalleryGalleryIdRoute: typeof GalleryGalleryIdRouteWithChildren
+}
+
+const GalleryRouteChildren: GalleryRouteChildren = {
+  GalleryGalleryIdRoute: GalleryGalleryIdRouteWithChildren,
+}
+
+const GalleryRouteWithChildren =
+  GalleryRoute._addFileChildren(GalleryRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactMeRoute: ContactMeRoute,
-  GalleryRoute: GalleryRoute,
+  GalleryRoute: GalleryRouteWithChildren,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminLoginRoute: AdminLoginRoute,
 }
