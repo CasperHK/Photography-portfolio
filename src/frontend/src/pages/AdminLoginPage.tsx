@@ -1,6 +1,7 @@
 import { Show, createSignal } from "solid-js";
 import PageFrame from "../components/PageFrame";
 import { ADMIN_LOGIN_URL } from "./PortfolioShared";
+import styles from "./AdminLoginPage.module.scss";
 
 type AdminLoginResponse = {
   token?: string;
@@ -68,15 +69,15 @@ export default function AdminLoginPage() {
       title="Administrator"
       subtitle="Secure access for photo management and publishing controls."
     >
-      <section class="admin-login-shell" aria-label="Administrator login">
-        <article class="admin-login-card">
-          <p class="admin-login-kicker">Backend Access</p>
+      <section class={styles.adminLoginShell} aria-label="Administrator login">
+        <article class={styles.adminLoginCard}>
+          <p class={styles.adminLoginKicker}>Backend Access</p>
           <h2>Admin Sign In</h2>
-          <p class="admin-login-summary">
+          <p class={styles.adminLoginSummary}>
             Authenticate to manage portfolio photos, sequencing, and archive updates.
           </p>
 
-          <form class="admin-login-form" onSubmit={handleSubmit}>
+          <form class={styles.adminLoginForm} onSubmit={handleSubmit}>
             <label>
               Email
               <input
@@ -105,12 +106,12 @@ export default function AdminLoginPage() {
           </form>
 
           <Show when={errorMessage()}>
-            <p class="admin-login-feedback error" role="alert">
+            <p class={`${styles.adminLoginFeedback} ${styles.error}`} role="alert">
               {errorMessage()}
             </p>
           </Show>
           <Show when={successMessage()}>
-            <p class="admin-login-feedback success">{successMessage()}</p>
+            <p class={`${styles.adminLoginFeedback} ${styles.success}`}>{successMessage()}</p>
           </Show>
         </article>
       </section>

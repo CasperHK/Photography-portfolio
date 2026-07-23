@@ -1,6 +1,7 @@
 import { For, Show, createEffect, createMemo, createSignal, onCleanup } from "solid-js";
 import BaseDialog from "./BaseDialog";
 import { getPhotoExifEntries, toMediaUrl, type Photo } from "../../pages/PortfolioShared";
+import styles from "./PhotoViewer.module.scss";
 
 type PhotoViewerProps = {
 	open: boolean;
@@ -66,7 +67,7 @@ export default function PhotoViewer(props: PhotoViewerProps) {
 			onClose={props.onClose}
 			labelledBy={titleId()}
 			ariaLabel={props.photo ? `Photo detail: ${props.photo.title}` : `${props.galleryTitle} photo detail`}
-			contentClass="photo-viewer-dialog"
+			contentClass={styles.photoViewerDialog}
 		>
 			<Show when={props.photo}>
 				{(photoAccessor) => {
@@ -74,12 +75,12 @@ export default function PhotoViewer(props: PhotoViewerProps) {
 					const photoUrl = toMediaUrl(photo.fileUrl);
 
 					return (
-						<div class="photo-viewer-layout">
-							<figure class="photo-viewer-media" aria-busy={isImageLoading()}>
+						<div class={styles.photoViewerLayout}>
+							<figure class={styles.photoViewerMedia} aria-busy={isImageLoading()}>
 								<Show when={isImageLoading()}>
-									<div class="photo-viewer-loading" aria-live="polite" aria-label="Loading photo">
+									<div class={styles.photoViewerLoading} aria-live="polite" aria-label="Loading photo">
 										<span
-											class="loading loading-spinner loading-lg text-primary photo-viewer-spinner"
+											class={`loading loading-spinner loading-lg text-primary ${styles.photoViewerSpinner}`}
 											aria-hidden="true"
 										/>
 									</div>
@@ -88,7 +89,7 @@ export default function PhotoViewer(props: PhotoViewerProps) {
 									src={photoUrl}
 									alt={photo.title}
 									loading="eager"
-									classList={{ "photo-viewer-image-loading": isImageLoading() }}
+									classList={{ [styles.photoViewerImageLoading]: isImageLoading() }}
 									onLoad={resolveImageLoading}
 									onError={resolveImageLoading}
 									ref={(image) => {
@@ -99,20 +100,20 @@ export default function PhotoViewer(props: PhotoViewerProps) {
 								/>
 							</figure>
 
-							<section class="photo-viewer-info">
-								<p class="photo-viewer-kicker">{props.galleryTitle}</p>
+							<section class={styles.photoViewerInfo}>
+								<p class={styles.photoViewerKicker}>{props.galleryTitle}</p>
 								<h3 id={titleId()}>{photo.title}</h3>
 								<Show when={photo.description?.trim()}>
-									<p class="photo-viewer-description">{photo.description}</p>
+									<p class={styles.photoViewerDescription}>{photo.description}</p>
 								</Show>
 
 								<Show when={exifEntries().length > 0}>
-									<div class="photo-viewer-metadata" aria-label="Photo metadata">
+									<div class={styles.photoViewerMetadata} aria-label="Photo metadata">
 										<h4>EXIF Metadata</h4>
 										<dl>
 											<For each={exifEntries()}>
 												{(entry) => (
-													<div class="photo-viewer-metadata-row">
+													<div class={styles.photoViewerMetadataRow}>
 														<dt>{entry.label}</dt>
 														<dd>{entry.value}</dd>
 													</div>

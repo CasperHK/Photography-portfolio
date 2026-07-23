@@ -1,0 +1,159 @@
+.photoViewerDialog {
+  padding: clamp(14px, 2vw, 22px);
+}
+
+.photoViewerLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.92fr);
+  gap: clamp(14px, 2vw, 24px);
+  align-items: start;
+}
+
+.photoViewerMedia {
+  position: relative;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  min-height: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #0f1114;
+
+  img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-height: calc(94vh - 120px);
+    object-fit: contain;
+    display: block;
+    background: #0f1114;
+    opacity: 1;
+    transition: opacity 180ms ease;
+  }
+}
+
+.photoViewerLoading {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 17, 20, 0.58);
+  pointer-events: none;
+}
+
+.photoViewerSpinner {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  border: 3px solid rgba(246, 242, 234, 0.28);
+  border-top-color: rgba(196, 154, 100, 0.95);
+  animation: photoViewerSpin 0.82s linear infinite;
+}
+
+@keyframes photoViewerSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.photoViewerImageLoading {
+  opacity: 0;
+}
+
+.photoViewerInfo {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 2px 6px 12px;
+
+  h3 {
+    margin: 0;
+    letter-spacing: 0.03em;
+    font-size: clamp(1.2rem, 2.1vw, 1.85rem);
+  }
+}
+
+.photoViewerKicker {
+  margin: 0;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+}
+
+.photoViewerDescription {
+  margin: 0;
+  color: var(--fog);
+  line-height: 1.64;
+  font-size: 0.98rem;
+}
+
+.photoViewerMetadata {
+  margin-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 10px;
+
+  h4 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  dl {
+    margin: 10px 0 0;
+    display: grid;
+    gap: 8px;
+  }
+
+  dt {
+    margin: 0;
+    color: rgba(246, 242, 234, 0.74);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.7rem;
+  }
+
+  dd {
+    margin: 0;
+    color: var(--ink);
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+}
+
+.photoViewerMetadataRow {
+  display: grid;
+  grid-template-columns: minmax(92px, 108px) minmax(0, 1fr);
+  gap: 10px;
+  align-items: baseline;
+}
+
+@media (max-width: 860px) {
+  .photoViewerDialog {
+    padding: 12px;
+  }
+
+  .photoViewerLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .photoViewerMedia {
+    img {
+      max-height: 56vh;
+    }
+  }
+
+  .photoViewerInfo {
+    gap: 10px;
+    padding: 0 2px 8px;
+  }
+
+  .photoViewerMetadataRow {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+}
