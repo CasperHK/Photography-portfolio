@@ -1,5 +1,8 @@
-import { Show, createEffect, onCleanup, type JSX } from "solid-js";
+import { Show, createEffect, createSignal, onCleanup, type JSX } from "solid-js";
+import { Motion } from "solid-motionone";
 import { Portal } from "solid-js/web";
+
+const DIALOG_ANIMATION_MS = 180;
 
 type BaseDialogProps = {
 	open: boolean;
@@ -11,8 +14,42 @@ type BaseDialogProps = {
 };
 
 export default function BaseDialog(props: BaseDialogProps) {
+	const [isRendered, setIsRendered] = createSignal(props.open);
+	let closeTimer: number | undefined;
+
+	const clearCloseTimer = () => {
+		if (closeTimer !== undefined) {
+			window.clearTimeout(closeTimer);
+			closeTimer = undefined;
+		}
+	};
+
 	createEffect(() => {
-		if (!props.open || typeof window === "undefined") return;
+		if (typeof window === "undefined") return;
+
+		clearCloseTimer();
+
+		if (props.open) {
+			setIsRendered(true);
+
+			return;
+		}
+
+		if (!isRendered()) {
+			return;
+		}
+
+		closeTimer = window.setTimeout(() => {
+			setIsRendered(false);
+		}, DIALOG_ANIMATION_MS);
+
+		onCleanup(() => {
+			clearCloseTimer();
+		});
+	});
+
+	createEffect(() => {
+		if (!isRendered() || typeof window === "undefined") return;
 
 		const originalOverflow = document.body.style.overflow;
 		const originalPaddingRight = document.body.style.paddingRight;
@@ -45,16 +82,26 @@ export default function BaseDialog(props: BaseDialogProps) {
 	};
 
 	return (
-		<Show when={props.open}>
+		<Show when={isRendered()}>
 			<Portal>
-				<div class="dialog-backdrop" role="presentation" onClick={handleBackdropClick}>
-					<section
-						class={`dialog-panel ${props.contentClass ?? ""}`.trim()}
-						role="dialog"
-						aria-modal="true"
-						aria-label={props.ariaLabel}
-						aria-labelledby={props.labelledBy}
+					<Motion.div
+						class="dialog-backdrop"
+						role="presentation"
+						onClick={handleBackdropClick}
+						initial={{ opacity: 0 }}
+						animate={{ opacity: props.open ? 1 : 0 }}
+						transition={{ duration: DIALOG_ANIMATION_MS / 1000, easing: [0.2, 0.8, 0.2, 1] }}
 					>
+						<Motion.section
+							class={`dialog-panel ${props.contentClass ?? ""}`.trim()}
+							role="dialog"
+							aria-modal="true"
+							aria-label={props.ariaLabel}
+							aria-labelledby={props.labelledBy}
+							initial={{ opacity: 0, y: 16, scale: 0.98 }}
+							animate={props.open ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 16, scale: 0.98 }}
+							transition={{ duration: DIALOG_ANIMATION_MS / 1000, easing: [0.2, 0.8, 0.2, 1] }}
+						>
 						<button
 							type="button"
 							class="dialog-close-button"
@@ -64,8 +111,8 @@ export default function BaseDialog(props: BaseDialogProps) {
 							×
 						</button>
 						{props.children}
-					</section>
-				</div>
+						</Motion.section>
+					</Motion.div>
 			</Portal>
 		</Show>
 	);

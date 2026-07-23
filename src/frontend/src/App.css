@@ -1042,6 +1042,11 @@ body {
     max-height: 96vh;
   }
 
+  .dialog-backdrop,
+  .dialog-panel {
+    /* Motion One handles animation; keep layout stable on small screens. */
+  }
+
   .dialog-close-button {
     margin-top: 8px;
     margin-right: 8px;

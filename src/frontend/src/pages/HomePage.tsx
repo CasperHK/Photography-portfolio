@@ -1,5 +1,6 @@
 import { createMemo, createSignal, For, onCleanup, onMount } from "solid-js";
 import PageFrame from "../components/PageFrame";
+import PhotoViewer from "../components/dialogs/PhotoViewer";
 import {
   API_BASE,
   FORCE_DEMO_PHOTOS_BY_ENV,
@@ -10,6 +11,7 @@ import {
 
 export default function HomePage() {
   const [photos, setPhotos] = createSignal<Photo[]>([]);
+  const [selectedPhoto, setSelectedPhoto] = createSignal<Photo | null>(null);
   let shellRef!: HTMLElement;
   let primaryTrackRef!: HTMLDivElement;
 
@@ -105,6 +107,22 @@ export default function HomePage() {
 
   const hasPhotos = createMemo(() => photos().length > 0);
 
+  const openPhotoViewer = (photo: Photo, event?: MouseEvent) => {
+    if (event) {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) {
+        return;
+      }
+
+      event.preventDefault();
+    }
+
+    setSelectedPhoto(photo);
+  };
+
+  const closePhotoViewer = () => {
+    setSelectedPhoto(null);
+  };
+
   return (
     <PageFrame
       title="Casper Photography"
@@ -118,9 +136,8 @@ export default function HomePage() {
                 <a
                   class={tileClass(photo, idx())}
                   href={toMediaUrl(photo.fileUrl)}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`Open ${photo.title} in a new tab`}
+                  aria-label={`Open ${photo.title} in the photo viewer`}
+                  onClick={(event) => openPhotoViewer(photo, event)}
                 >
                   <img src={toMediaUrl(photo.thumbUrl)} alt={photo.title} loading="lazy" />
                 </a>
@@ -133,9 +150,8 @@ export default function HomePage() {
                 <a
                   class={tileClass(photo, idx())}
                   href={toMediaUrl(photo.fileUrl)}
-                  target="_blank"
-                  rel="noreferrer"
                   tabIndex={-1}
+                  aria-hidden="true"
                 >
                   <img src={toMediaUrl(photo.thumbUrl)} alt="" loading="lazy" />
                 </a>
@@ -144,6 +160,13 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <PhotoViewer
+        open={selectedPhoto() !== null}
+        photo={selectedPhoto()}
+        galleryTitle="Home"
+        onClose={closePhotoViewer}
+      />
     </PageFrame>
   );
 }

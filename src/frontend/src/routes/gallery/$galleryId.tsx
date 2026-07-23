@@ -1,9 +1,12 @@
-import { createFileRoute } from '@tanstack/solid-router'
+import { createFileRoute } from "@tanstack/solid-router";
+import GalleryPage from "../../pages/GalleryPage";
 
-export const Route = createFileRoute('/gallery/$galleryId')({
-  component: RouteComponent,
-})
+export const Route = createFileRoute("/gallery/$galleryId")({
+  component: GalleryDetailRoute,
+});
 
-function RouteComponent() {
-  return <div>Hello "/gallery/$galleryId"!</div>
+function GalleryDetailRoute() {
+  const params = Route.useParams();
+
+  return <GalleryPage galleryId={params().galleryId} />;
 }
