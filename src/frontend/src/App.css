@@ -155,6 +155,10 @@ body {
   outline-offset: 2px;
 }
 
+.about-tools-trigger {
+  margin-top: 18px;
+}
+
 .gallery-meta {
   display: flex;
   flex-wrap: wrap;

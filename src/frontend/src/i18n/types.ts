@@ -11,10 +11,21 @@ export type GalleryInfo = {
 };
 
 export type AboutPanel = {
+  id: string;
   heading: string;
   text: string;
   secondaryText?: string;
 };
+
+export type AboutTool = {
+  category: AboutToolCategory;
+  name: string;
+  description: string;
+  photoUrl: string;
+  alt: string;
+};
+
+export type AboutToolCategory = "camera" | "lens" | "tripods" | "other";
 
 export type ExifLabels = {
   camera: string;
@@ -49,6 +60,24 @@ export type LocaleMessages = {
     title: string;
     subtitle: string;
     ariaSection: string;
+    toolsDialog: {
+      triggerLabel: string;
+      triggerAria: string;
+      ariaLabel: string;
+      title: string;
+      description: string;
+      filterLabel: string;
+      filters: {
+        all: string;
+        camera: string;
+        lens: string;
+        tripods: string;
+        other: string;
+      };
+      itemsAria: string;
+      emptyState: string;
+      items: AboutTool[];
+    };
   };
   contact: {
     title: string;

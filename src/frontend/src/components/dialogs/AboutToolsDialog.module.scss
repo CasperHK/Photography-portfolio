@@ -1,0 +1,133 @@
+.aboutToolsDialog {
+  width: min(980px, 100%);
+}
+
+.layout {
+  padding: 20px clamp(18px, 2.4vw, 28px) clamp(24px, 3.2vw, 34px);
+
+  h3 {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(1.35rem, 2.2vw, 2rem);
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+  }
+}
+
+.description {
+  margin: 12px 0 0;
+  color: var(--fog);
+  line-height: 1.6;
+  max-width: 66ch;
+}
+
+.filterRow {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filterButton {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--fog);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.filterButton:hover,
+.filterButton:focus-visible {
+  border-color: rgba(196, 154, 100, 0.62);
+  color: var(--ink);
+}
+
+.filterButton:focus-visible {
+  outline: 2px solid rgba(196, 154, 100, 0.7);
+  outline-offset: 2px;
+}
+
+.isActive {
+  border-color: rgba(196, 154, 100, 0.72);
+  background: rgba(196, 154, 100, 0.16);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.toolsGrid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.emptyState {
+  grid-column: 1 / -1;
+  margin: 4px 0 0;
+  min-height: 180px;
+  border: 1px dashed rgba(255, 255, 255, 0.22);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 14px;
+  color: var(--fog);
+  line-height: 1.5;
+}
+
+.toolCard {
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03)),
+    rgba(15, 19, 24, 0.7);
+  padding: 10px;
+
+  h4 {
+    margin: 10px 0 0;
+    color: var(--ink);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+  }
+
+  p {
+    margin: 8px 0 0;
+    color: var(--fog);
+    line-height: 1.5;
+    font-size: 0.9rem;
+  }
+}
+
+.toolMedia {
+  margin: 0;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.25);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+@media (max-width: 860px) {
+  .layout {
+    padding: 16px 14px 20px;
+  }
+
+  .toolsGrid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
