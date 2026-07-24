@@ -1,4 +1,5 @@
 import { For, onCleanup, onMount } from "solid-js";
+import InfoPanel from "../components/InfoPanel";
 import PageFrame from "../components/PageFrame";
 import { useI18n } from "../i18n/context";
 
@@ -35,10 +36,9 @@ export default function AboutPage() {
         <div class="about-track">
           <For each={messages().aboutPanels}>
             {(panel) => (
-              <article class="about-card">
-                <h2>{panel.heading}</h2>
+              <InfoPanel heading={panel.heading}>
                 <p>{panel.text}</p>
-              </article>
+              </InfoPanel>
             )}
           </For>
         </div>

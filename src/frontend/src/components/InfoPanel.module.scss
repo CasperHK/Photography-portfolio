@@ -1,0 +1,38 @@
+.panel {
+  width: clamp(260px, 34vw, 520px);
+  min-height: clamp(240px, 45vh, 420px);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+    rgba(17, 20, 25, 0.7);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.32);
+  padding: clamp(18px, 2.4vw, 30px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  h2 {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: clamp(0.8rem, 1vw, 0.95rem);
+  }
+
+  p {
+    margin: 14px 0 0;
+    color: var(--fog);
+    font-size: clamp(0.9rem, 1.05vw, 1.06rem);
+    line-height: 1.6;
+    max-width: 48ch;
+  }
+}
+
+@media (max-width: 860px) {
+  .panel {
+    width: min(80vw, 360px);
+    min-height: clamp(220px, 42vh, 320px);
+    border-radius: 13px;
+    padding: 16px;
+  }
+}
