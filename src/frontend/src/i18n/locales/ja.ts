@@ -100,6 +100,7 @@ export const jaMessages: LocaleMessages = {
       title: "Harbor Light",
       subtitle: "ノート、シーケンス、縦位置研究を含む構成的な編集。",
       summary: "道の端、天候、通り過ぎる光を記録した横方向のフィールドノート。",
+      coverImageUrl: "https://picsum.photos/seed/gallery-harbor-light/1200/1600",
       notes: [
         "旅・ストリート・ランドスケープ作品を流れるコンタクトウォールとして配置。",
         "ホイールやトラックパッドで移動し、フレームを開いて詳細を確認できます。",
@@ -112,6 +113,7 @@ export const jaMessages: LocaleMessages = {
       title: "Midnight Crossings",
       subtitle: "ネオンのにじみ、濡れたコンクリート、列車の間に生まれる短い仕草。",
       summary: "反射、圧縮された動き、重なるサインを軸にした夜のストリートコレクション。",
+      coverImageUrl: "https://picsum.photos/seed/gallery-midnight-crossings/1200/1600",
       notes: [
         "長い影と反射面が重なる高密度の都市フレーム。",
         "反復する人物と鏡面の店先を、ゆっくり読めるテンポで配置。",
@@ -124,6 +126,7 @@ export const jaMessages: LocaleMessages = {
       title: "Highland Weather",
       subtitle: "尾根、路肩の霧、開けた地形を横切る変化する光。",
       summary: "高地、低コントラストの天候、静かな地平線を主題にした風景編集。",
+      coverImageUrl: "https://picsum.photos/seed/gallery-highland-weather/1200/1600",
       notes: [
         "霧、草地、遠景の構造物を軸にした広い構図。",
         "冷たい夜明けの光から平坦な午後の天候へ移るシーケンス。",
@@ -136,6 +139,7 @@ export const jaMessages: LocaleMessages = {
       title: "Platform Notes",
       subtitle: "出発、待合室、見過ごされる移動の儀式。",
       summary: "駅、フェリー、路上の小休止からなるドキュメンタリー的な旅の日誌。",
+      coverImageUrl: "https://picsum.photos/seed/gallery-platform-notes/1200/1600",
       notes: [
         "仕草、荷物、チケット、移行空間など日常の行為に焦点。",
         "色を抑えて、空気感と反復性を強調。",
@@ -148,6 +152,7 @@ export const jaMessages: LocaleMessages = {
       title: "Salt and Concrete",
       subtitle: "防波堤、港湾壁面、ウォーターフロントの幾何。",
       summary: "工業的な質感と開放水面、霞を組み合わせた海岸建築シーケンス。",
+      coverImageUrl: "https://picsum.photos/seed/gallery-salt-and-concrete/1200/1600",
       notes: [
         "形、余白、反復する構造線を中心に構築。",
         "ミニマルな広景と表面の近接研究を交互に展開。",

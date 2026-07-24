@@ -1,0 +1,83 @@
+.galleryCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100%;
+  min-width: 0;
+  padding: 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    linear-gradient(180deg, rgba(10, 12, 16, 0.14) 0%, rgba(10, 12, 16, 0.48) 42%, rgba(10, 12, 16, 0.86) 100%),
+    var(--gallery-card-image) center center / cover no-repeat,
+    rgba(15, 18, 24, 0.82);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  color: var(--ink);
+  text-decoration: none;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.galleryCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0));
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.galleryCard:hover,
+.galleryCard:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(196, 154, 100, 0.55);
+  box-shadow: 0 28px 52px rgba(0, 0, 0, 0.36);
+}
+
+.galleryCardContent {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 12px;
+}
+
+.galleryCardKicker {
+  margin: 0;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+}
+
+.galleryCardTitle {
+  margin: 0;
+  font-size: clamp(1.4rem, 2vw, 1.9rem);
+  line-height: 1;
+}
+
+.galleryCardSubtitle,
+.galleryCardSummary {
+  margin: 0;
+  color: var(--fog);
+  line-height: 1.6;
+}
+
+.galleryCardLink {
+  color: var(--ink);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.galleryCard:focus-visible {
+  outline: 2px solid rgba(196, 154, 100, 0.7);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .galleryCard {
+    transition: border-color 180ms ease, box-shadow 180ms ease;
+  }
+}

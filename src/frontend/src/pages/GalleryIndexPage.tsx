@@ -1,5 +1,5 @@
-import { Link } from "@tanstack/solid-router";
 import { For, createMemo } from "solid-js";
+import GalleryCard from "../components/GalleryCard";
 import PageFrame from "../components/PageFrame";
 import { useI18n } from "../i18n/context";
 
@@ -25,17 +25,10 @@ export default function GalleryIndexPage() {
             <div class="gallery-index-grid">
               <For each={galleries()}>
                 {(gallery) => (
-                  <Link
-                    class="gallery-card"
-                    to="/gallery/$galleryId"
-                    params={{ galleryId: gallery.id }}
-                  >
-                    <p class="gallery-card-kicker">{gallery.kicker}</p>
-                    <h3>{gallery.title}</h3>
-                    <p class="gallery-card-subtitle">{gallery.subtitle}</p>
-                    <p class="gallery-card-summary">{gallery.summary}</p>
-                    <span class="gallery-card-link">{messages().galleryIndex.openGallery}</span>
-                  </Link>
+                  <GalleryCard
+                    gallery={gallery}
+                    openGalleryLabel={messages().galleryIndex.openGallery}
+                  />
                 )}
               </For>
             </div>

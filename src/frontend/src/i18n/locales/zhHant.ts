@@ -100,6 +100,7 @@ export const zhHantMessages: LocaleMessages = {
       title: "港灣之光",
       subtitle: "結構化編輯，含註記、序列與縱向研究。",
       summary: "一組橫向編排的田野筆記，關於道路邊界、天氣與掠過的光。",
+      coverImageUrl: "https://picsum.photos/seed/gallery-harbor-light/1200/1600",
       notes: [
         "旅行、街頭與地景作品被整理成可流動閱讀的接觸片牆。",
         "可使用滑鼠滾輪或觸控板瀏覽序列，點擊影像查看細節。",
@@ -112,6 +113,7 @@ export const zhHantMessages: LocaleMessages = {
       title: "午夜交會",
       subtitle: "霓虹外溢、潮濕水泥與列車之間的短暫姿態。",
       summary: "夜間街景系列，以倒影、壓縮動態與多層招牌構成。",
+      coverImageUrl: "https://picsum.photos/seed/gallery-midnight-crossings/1200/1600",
       notes: [
         "高密度都會畫面，長陰影與反光表面相互交錯。",
         "節奏偏慢，反覆出現的人物與鏡像櫥窗形成對照。",
@@ -124,6 +126,7 @@ export const zhHantMessages: LocaleMessages = {
       title: "高地天氣",
       subtitle: "山脊、路邊霧氣與開闊地帶上不斷變化的光。",
       summary: "聚焦高海拔、低反差氣候與安靜地平線的地景編輯。",
+      coverImageUrl: "https://picsum.photos/seed/gallery-highland-weather/1200/1600",
       notes: [
         "以霧、草地與遠方建物支撐寬景構圖。",
         "序列從寒冷晨光逐步過渡到平淡午後天色。",
@@ -136,6 +139,7 @@ export const zhHantMessages: LocaleMessages = {
       title: "月台筆記",
       subtitle: "出發、候車室與被忽略的轉運儀式。",
       summary: "來自車站、渡輪與路邊停留的紀實片段，被縫合成一本旅行日誌。",
+      coverImageUrl: "https://picsum.photos/seed/gallery-platform-notes/1200/1600",
       notes: [
         "畫面聚焦日常手勢、行李、票券與過渡空間。",
         "色彩克制，凸顯氛圍與重複性。",
@@ -148,6 +152,7 @@ export const zhHantMessages: LocaleMessages = {
       title: "鹽與混凝土",
       subtitle: "防波堤、港牆與濱水幾何。",
       summary: "結合工業質地、開闊水面與霧氣的海岸建築序列。",
+      coverImageUrl: "https://picsum.photos/seed/gallery-salt-and-concrete/1200/1600",
       notes: [
         "圍繞形狀、留白與重複結構線條建構。",
         "在極簡寬景與近距離表面研究之間切換。",

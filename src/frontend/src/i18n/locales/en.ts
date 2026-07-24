@@ -100,6 +100,7 @@ export const enMessages: LocaleMessages = {
       title: "Harbor Light",
       subtitle: "A structured edit with notes, sequencing, and vertical studies.",
       summary: "A horizontal edit of field notes, road edges, weather, and passing light.",
+      coverImageUrl: "https://picsum.photos/seed/gallery-harbor-light/1200/1600",
       notes: [
         "Travel, street, and landscape work arranged as a moving contact wall.",
         "Use wheel or trackpad to move through the sequence and open a frame for details.",
@@ -113,6 +114,7 @@ export const enMessages: LocaleMessages = {
       subtitle: "Neon spill, wet concrete, and brief gestures between trains.",
       summary:
         "A night-street collection built around reflections, compressed movement, and layered signage.",
+      coverImageUrl: "https://picsum.photos/seed/gallery-midnight-crossings/1200/1600",
       notes: [
         "Dense urban frames with long shadows and reflective surfaces.",
         "Built for slower reading, with recurring figures and mirrored storefronts.",
@@ -126,6 +128,7 @@ export const enMessages: LocaleMessages = {
       subtitle: "Ridges, roadside fog, and changing light over open ground.",
       summary:
         "A landscape edit focused on altitude, low-contrast weather, and quiet horizon studies.",
+      coverImageUrl: "https://picsum.photos/seed/gallery-highland-weather/1200/1600",
       notes: [
         "Wider compositions anchored by mist, grass, and distant structures.",
         "Sequencing moves from cold dawn light into flatter afternoon weather.",
@@ -139,6 +142,7 @@ export const enMessages: LocaleMessages = {
       subtitle: "Departures, waiting rooms, and overlooked transit rituals.",
       summary:
         "A documentary-style set from stations, ferries, and roadside pauses stitched into one travel diary.",
+      coverImageUrl: "https://picsum.photos/seed/gallery-platform-notes/1200/1600",
       notes: [
         "Frames center on routine gestures, bags, tickets, and transitional space.",
         "Color stays restrained to emphasize atmosphere and repetition.",
@@ -152,6 +156,7 @@ export const enMessages: LocaleMessages = {
       subtitle: "Breakwaters, harbor walls, and the geometry of the waterfront.",
       summary:
         "An architectural shoreline sequence combining industrial texture with open water and haze.",
+      coverImageUrl: "https://picsum.photos/seed/gallery-salt-and-concrete/1200/1600",
       notes: [
         "Built around shape, negative space, and repeated structural lines.",
         "Alternates between minimal wide frames and close surface studies.",

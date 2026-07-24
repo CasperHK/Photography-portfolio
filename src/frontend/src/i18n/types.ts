@@ -6,6 +6,7 @@ export type GalleryInfo = {
   title: string;
   subtitle: string;
   summary: string;
+  coverImageUrl: string;
   notes: string[];
 };
 
