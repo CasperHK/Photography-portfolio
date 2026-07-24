@@ -161,8 +161,10 @@ export const enMessages: LocaleMessages = {
   },
   aboutPanels: [
     {
-      heading: "Approach",
-      text: "I photograph motion, weather, and small city moments to keep the frame honest and tactile.",
+      heading: "About Me",
+      text: "I graduated from The Hong Kong Polytechnic University, but my journey with photography began in secondary school. Since then, the camera has become my way of observing light, emotion, and the quiet beauty of everyday moments. I continue to learn and refine my craft, including completing a commercial photography course last year, and I find the greatest joy in creating images that feel honest, beautiful, and alive.",
+      secondaryText:
+        "My favorite subject in photography right now is ecological photography. I am drawn to the relationship between living things, their habitats, and the quiet rhythms of the natural world. Through these images, I hope to share the beauty, balance, and fragility of nature.",
     },
     {
       heading: "Timeline",

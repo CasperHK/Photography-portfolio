@@ -1,4 +1,4 @@
-import { For, onCleanup, onMount } from "solid-js";
+import { For, Show, onCleanup, onMount } from "solid-js";
 import InfoPanel from "../components/InfoPanel";
 import PageFrame from "../components/PageFrame";
 import { useI18n } from "../i18n/context";
@@ -38,6 +38,9 @@ export default function AboutPage() {
             {(panel) => (
               <InfoPanel heading={panel.heading}>
                 <p>{panel.text}</p>
+                <Show when={panel.secondaryText}>
+                  <p>{panel.secondaryText}</p>
+                </Show>
               </InfoPanel>
             )}
           </For>

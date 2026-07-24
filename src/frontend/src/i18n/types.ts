@@ -12,6 +12,7 @@ export type GalleryInfo = {
 export type AboutPanel = {
   heading: string;
   text: string;
+  secondaryText?: string;
 };
 
 export type ExifLabels = {
