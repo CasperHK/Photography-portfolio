@@ -31,7 +31,12 @@ This file is the project playbook for coding agents. Follow it to make safe, pre
 - Prefer editing route files under `src/frontend/src/routes` and let generation happen on build/dev.
 - Do not manually edit artifacts in `src/frontend/dist`.
 
-## 5. Run Commands (Local)
+## 5. Frontend Styling Conventions
+
+- Each frontend component should own a colocated `ComponentName.module.scss` file for component-specific styles.
+- Keep truly shared or app-wide styles in global stylesheets only when the style is intentionally cross-component.
+
+## 6. Run Commands (Local)
 
 - Frontend dev:
 	- `cd src/frontend`
@@ -43,7 +48,7 @@ This file is the project playbook for coding agents. Follow it to make safe, pre
 	- `cd src/backend`
 	- `go run .`
 
-## 6. Change Workflow for Agents
+## 7. Change Workflow for Agents
 
 - Read target files first.
 - Make smallest change that satisfies request.
@@ -52,7 +57,7 @@ This file is the project playbook for coding agents. Follow it to make safe, pre
 - After backend edits, run `go run .` in `src/backend` when feasible.
 - Report what changed and how it was validated.
 
-## 7. Common Mistakes to Avoid
+## 8. Common Mistakes to Avoid
 
 - Using wrong paths (`backend` vs `src/backend`, `frontend` vs `src/frontend`).
 - Adding routes in nav but forgetting route files.
@@ -60,7 +65,7 @@ This file is the project playbook for coding agents. Follow it to make safe, pre
 - Leaving unused imports/types after refactor.
 - Mixing unrelated refactors into one change.
 
-## 8. Code Quality Guidelines
+## 9. Code Quality Guidelines
 
 - Prefer clear, explicit code over clever shortcuts.
 - Keep functions focused and composable.
@@ -68,7 +73,7 @@ This file is the project playbook for coding agents. Follow it to make safe, pre
 - Keep TypeScript types close to domain concepts.
 - Use concise comments only where intent is non-obvious.
 
-## 9. Delivery Checklist
+## 10. Delivery Checklist
 
 - Change compiles/builds.
 - Route links resolve correctly.
